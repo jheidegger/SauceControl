@@ -7,6 +7,9 @@ import Auth2 from '../Auth2';
 import {Auth2Context} from '../Auth2';
 
 class Navigation extends Component {
+  constructor(props) {
+    super(props)
+  }
   render(){
     return(<div>
     <NavigationBar />
@@ -35,10 +38,10 @@ const NavigationBar = () => (
       <Link class="nav-link" to={ROUTES.LANDING}>LandingPage</Link>
       </li>
       <li class="nav-item">
-      <SignInButton/>
+      <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
       </li>
       <li class="nav-item">
-      <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
+      <SignInButton/>
       </li>
     </ul>
   </div>
@@ -47,13 +50,14 @@ const NavigationBar = () => (
 );
 class SignInButton extends Component {
   componentDidMount() {
-    var auth = new Auth2();
-    console.log(auth);
+    //var auth = new Auth2();
+    //console.log(auth);
     
     window.gapi.load('auth2', () => {
-        window.gapi.auth2.init({
+        this.auth2 = window.gapi.auth2.init({
         client_id: "680067494074-6prk74r4md0u4emgb4k5i2803t6i8pjf"
     }).then(() => {
+      console.log(this.auth2.isSignedIn)
         window.gapi.signin2.render('my-signIn', {
           'scope': 'profile email',
           'width': 120,
@@ -63,10 +67,14 @@ class SignInButton extends Component {
           'onsuccess': this.onSuccess,
           'onfailure': this.onFailure
         })
+        
       }) 
-    })    
+    })
+    
+    
   }
   onSuccess = (user) => {
+    
     var profile = user.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
@@ -74,6 +82,8 @@ class SignInButton extends Component {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var id_token = user.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
+    console.log(user);
+    sessionStorage.setItem("userData", JSON.stringify(user.getBasicProfile()));
   }
   onFailure = () => {
     console.log('Failure');
