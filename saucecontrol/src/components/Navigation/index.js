@@ -1,7 +1,9 @@
 import React from 'react';
+import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../constants/saucecontrol1.png'
 import * as ROUTES from '../../constants/routes';
+
 
 const Navigation = () => (
   <div>
@@ -19,17 +21,6 @@ const NavigationBar = () => (
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      {
-        /*
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      
-      <li class="nav-item">
-        <Link class="nav-link" to={ROUTES.LANDING}>Landing</Link>
-      </li>
-        */
-      }
       <li class="nav-item">
         <Link class="nav-link" to={ROUTES.HOME}>Home</Link>
       </li>
@@ -43,13 +34,45 @@ const NavigationBar = () => (
       <Link class="nav-link" to={ROUTES.LANDING}>LandingPage</Link>
       </li>
       <li class="nav-item">
-      <Link class="nav-link" to={ROUTES.SIGN_IN}>SignIn</Link>
+      <SignInButton/>
       </li>
     </ul>
   </div>
 </nav>
   
 );
+class SignInButton extends Component {
+  componentDidMount() {
+    window.gapi.load('auth2', () => {
+        window.gapi.auth2.init({
+        client_id: "680067494074-6prk74r4md0u4emgb4k5i2803t6i8pjf"
+    }).then(() => {
+        window.gapi.signin2.render('my-signIn', {
+          'scope': 'profile email',
+          'width': 120,
+          'height': 40,
+          'longtitle': false,
+          'theme': 'dark',
+          'onsuccess': this.onSuccess,
+          'onfailure': this.onFailure
+        })
+      }) 
+    })    
+  }
+  onSuccess = (user) => {
+    var profile = user.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+    var id_token = user.getAuthResponse().id_token;
+    console.log("ID Token: " + id_token);
+  }
+  onFailure = () => {
+    console.log('Failure');
+  }
+  render = () => (<div id="my-signIn" />)
+}
 const NavigationNonAuth = () => (
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="Home">Mayfly</a>
