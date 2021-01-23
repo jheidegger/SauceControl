@@ -1,8 +1,9 @@
 import React from 'react';
 
 const Home = () => (
-  <div>
-    <h1>Home</h1>
+  <div class="container-fluid">
+    <div class="row"><h1 class="s-4 animate__animated animate__fadeInLeft">Home</h1></div>
+    
   </div>
 );
 

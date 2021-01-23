@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import logo from '../../constants/saucecontrol1.png'
 import * as ROUTES from '../../constants/routes';
 
 const Navigation = () => (
@@ -11,7 +11,9 @@ const Navigation = () => (
 );
 const NavigationBar = () => (
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="Home">Mayfly</a>
+  <a class="navbar-brand" href="Home">
+      <img src={logo} alt="logo" width="100" height="60"/>
+  </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
