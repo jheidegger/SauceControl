@@ -2,7 +2,9 @@ import React, { useState, useEffect, Component } from 'react';
  
 import * as ROUTES from '../../constants/routes';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { Container, Row, Col, Button } from 'react-bootstrap';
 
 
 
@@ -95,7 +97,8 @@ class CreateRecipe extends Component {
               name="amount"
             />
             <br></br>
-            <Button variant="outline-secondary" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</Button>
+          
+            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
           </div>
         );
       });
@@ -178,7 +181,9 @@ class CreateRecipe extends Component {
     render() { 
 
     return (
+
       <div>
+        
          <h1>Add a new recipe!</h1>
         <form onSubmit={this.handleSumbit} >
           <fieldset>
@@ -193,7 +198,7 @@ class CreateRecipe extends Component {
                 onChange={this.handleChange}
                 ></input>
             </div>
-
+           
             <div className="form-group">
                 <label forHtml="textArea">Summary </label>
                 <textarea 
@@ -204,12 +209,14 @@ class CreateRecipe extends Component {
                   onChange={this.handleChange} 
                   placeholder="80 characters max"></textarea>
             </div>
+ 
 
             <div class="form-group">
               <label>Ingredients</label>
               {this.renderIngredientInputs()}
               <button type="button" className="btn btn-primary" onClick={()=> this.addIngredientInputs()}>+ Add Ingredient</button>
             </div>
+
 
             <div class="form-group">
               <label forHtml="textArea">Steps</label>
@@ -218,6 +225,7 @@ class CreateRecipe extends Component {
             </div>
             
             <input type="submit" className="btn btn-secondary"></input>
+           
           </fieldset>
         </form>
         <div className="col-4"></div>
