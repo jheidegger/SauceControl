@@ -9,7 +9,7 @@ const initFields = {
     title: '',
     summary: '',
     picture: '',
-    ingredients: [],
+    ingredients: [{name: "", amount:""}],
     steps: [],
     times: [],
     serves: '',
@@ -95,7 +95,7 @@ class CreateRecipe extends Component {
             />
             <br></br>
             {/* </div><Button variant=""btn btn-secondary"" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</Button> */}
-            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
+            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeStepInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
             
           </div>
         );
@@ -205,13 +205,13 @@ class CreateRecipe extends Component {
                   onChange={this.handleChange} 
                   placeholder="80 characters max"></textarea>
             </div>
-
+{/* 
             <div class="form-group">
               <label>Ingredients</label>
               {this.renderIngredientInputs()}
               <button type="button" className="btn btn-primary" onClick={()=> this.addIngredientInputs()}>+ Add Ingredient</button>
             </div>
-
+*/}
             <div class="form-group">
               <label forHtml="textArea">Steps</label>
               {this.renderStepInputs()}

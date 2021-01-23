@@ -9,7 +9,7 @@ const initFields = {
     title: '',
     summary: '',
     picture: '',
-    ingredients: [],
+    ingredients: [{name: "", amount:""}],
     steps: [],
     times: [],
     serves: '',

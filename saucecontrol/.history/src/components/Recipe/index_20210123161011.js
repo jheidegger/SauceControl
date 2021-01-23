@@ -9,7 +9,7 @@ const initFields = {
     title: '',
     summary: '',
     picture: '',
-    ingredients: [],
+    ingredients: [{name: "", amount:""}],
     steps: [],
     times: [],
     serves: '',
@@ -95,7 +95,7 @@ class CreateRecipe extends Component {
             />
             <br></br>
             {/* </div><Button variant=""btn btn-secondary"" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</Button> */}
-            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
+            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeStepInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
             
           </div>
         );

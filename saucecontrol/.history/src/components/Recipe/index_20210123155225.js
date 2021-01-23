@@ -6,10 +6,10 @@ import { withFirebase } from '../Firebase';
 import app from 'firebase/app';
 import  { FirebaseContext } from '../Firebase';
 const initFields = {
-    title: '',
+    name: '',
     summary: '',
     picture: '',
-    ingredients: [],
+    ingredients: [{name: "", amount:""}],
     steps: [],
     times: [],
     serves: '',
@@ -25,7 +25,6 @@ class CreateRecipe extends Component {
     
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value})
-
     }
 
     handleIngredientNameChange = (event, ingredientIndex) => {
@@ -95,7 +94,7 @@ class CreateRecipe extends Component {
             />
             <br></br>
             {/* </div><Button variant=""btn btn-secondary"" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</Button> */}
-            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
+            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeStepInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
             
           </div>
         );
@@ -170,8 +169,7 @@ class CreateRecipe extends Component {
 
     handleSumbit = (event) => {
       event.preventDefault()
-      console.log(this.state.name)
-      this.props.firebase.insert_recipe(this.state)
+      this.props.firebase.insert_recipe(state)
       this.props.history.push('/')
   }
     
@@ -205,13 +203,13 @@ class CreateRecipe extends Component {
                   onChange={this.handleChange} 
                   placeholder="80 characters max"></textarea>
             </div>
-
+{/* 
             <div class="form-group">
               <label>Ingredients</label>
               {this.renderIngredientInputs()}
               <button type="button" className="btn btn-primary" onClick={()=> this.addIngredientInputs()}>+ Add Ingredient</button>
             </div>
-
+*/}
             <div class="form-group">
               <label forHtml="textArea">Steps</label>
               {this.renderStepInputs()}

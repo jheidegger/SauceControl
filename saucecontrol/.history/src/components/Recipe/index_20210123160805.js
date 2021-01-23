@@ -6,10 +6,10 @@ import { withFirebase } from '../Firebase';
 import app from 'firebase/app';
 import  { FirebaseContext } from '../Firebase';
 const initFields = {
-    title: '',
+    name: '',
     summary: '',
     picture: '',
-    ingredients: [],
+    ingredients: [{ingredient: "", amount:""}],
     steps: [],
     times: [],
     serves: '',
@@ -24,6 +24,7 @@ class CreateRecipe extends Component {
     }
     
     handleChange = (event) => {
+     
         this.setState({[event.target.name]: event.target.value})
 
     }
@@ -35,7 +36,7 @@ class CreateRecipe extends Component {
           ...prev,
           ingredients: prev.ingredients.map((ingredient, index) => {
             if (index == ingredientIndex) {
-              return { ...ingredient, name: newIngredientName};
+              return { ...ingredient, ingredient: newIngredientName};
             } 
             return ingredient;
           }),
@@ -62,7 +63,7 @@ class CreateRecipe extends Component {
       this.setState((prev) => {
           return {
             ...prev,
-            ingredients: [...prev.ingredients, { name: "", amount:"" }],
+            ingredients: [...prev.ingredients, { ingredient: "", amount:"" }],
           };
         });
     }
@@ -84,7 +85,7 @@ class CreateRecipe extends Component {
               value={this.state.ingredients[index].name}
               onChange={(event) => this.handleIngredientNameChange(event, index)}
               placeholder="Name"
-              name="name"
+              name="ingredient"
             />
 
             <input
@@ -95,7 +96,7 @@ class CreateRecipe extends Component {
             />
             <br></br>
             {/* </div><Button variant=""btn btn-secondary"" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</Button> */}
-            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
+            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeStepInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
             
           </div>
         );
@@ -184,13 +185,13 @@ class CreateRecipe extends Component {
         <form onSubmit={this.handleSumbit} >
           <fieldset>
             <div class="form-group">
-              <label for="inputDefault">Title</label>
+              <label for="inputDefault">Name</label>
               <input 
                 type="inputDefault" 
-                name="title"
+                name="name"
                 class="form-control" 
                 id="inputDefault"
-                placeholder="Enter title"
+                placeholder="name"
                 onChange={this.handleChange}
                 ></input>
             </div>
@@ -205,13 +206,13 @@ class CreateRecipe extends Component {
                   onChange={this.handleChange} 
                   placeholder="80 characters max"></textarea>
             </div>
-
+{/* 
             <div class="form-group">
               <label>Ingredients</label>
               {this.renderIngredientInputs()}
               <button type="button" className="btn btn-primary" onClick={()=> this.addIngredientInputs()}>+ Add Ingredient</button>
             </div>
-
+*/}
             <div class="form-group">
               <label forHtml="textArea">Steps</label>
               {this.renderStepInputs()}

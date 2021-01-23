@@ -29,10 +29,9 @@ class Firebase {
   });
   }
   async insert_recipe(state) {
-    this.db.collection("recipes").doc(state.title).set({
+    this.db.collection("recipes").doc(state.name).set({
       ingredients: state.ingredients,
-      steps: state.steps,
-      summary: state.summary
+      steps: state.steps
   })
   }
 }
