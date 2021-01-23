@@ -11,7 +11,7 @@ import AdminPage from '../Admin';
 
 import * as ROUTES from '../../constants/routes';
 import CreateRecipe from '../Recipe';
-import RecipeViewer from '../RecipeViewer';
+
 const App = () => (
   
   <Router>
@@ -19,11 +19,10 @@ const App = () => (
       <Navigation />
 
      
-      
+      <Route path="/:recipe" component={RecipeViewer} />
       <Route exact path={ROUTES.LANDING} component={LandingPage} />
       <Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
       <Route exact path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage}/>
-      <Route path="/recipes/:recipe" component={RecipeViewer} />
       <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route exact path={ROUTES.ADMIN} component={AdminPage} />
