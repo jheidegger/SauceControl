@@ -1,10 +1,11 @@
 import React, { useState, useEffect, Component } from 'react';
  
 import * as ROUTES from '../../constants/routes';
+
 import Button from 'react-bootstrap/Button'
-import { withFirebase } from '../Firebase';
-import app from 'firebase/app';
-import  { FirebaseContext } from '../Firebase';
+
+
+
 const initFields = {
     name: '',
     summary: '',
@@ -93,9 +94,7 @@ class CreateRecipe extends Component {
               name="amount"
             />
             <br></br>
-            {/* </div><Button variant=""btn btn-secondary"" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</Button> */}
-            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeStepInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</button>
-            
+            <Button variant="outline-secondary" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</Button>
           </div>
         );
       });
@@ -166,12 +165,10 @@ class CreateRecipe extends Component {
         };
       });
     };
-    onAddRecipe = (state) => {
 
-    }
     handleSumbit = (event) => {
       event.preventDefault()
-      this.onAddRecipe(this.state)
+      this.props.onAddRecipe(this.state)
       this.props.history.push('/')
 
   }
@@ -212,12 +209,12 @@ class CreateRecipe extends Component {
               {this.renderIngredientInputs()}
               <button type="button" className="btn btn-primary" onClick={()=> this.addIngredientInputs()}>+ Add Ingredient</button>
             </div>
-*/}
+
             <div class="form-group">
               <label forHtml="textArea">Steps</label>
               {this.renderStepInputs()}
               <button type="button" className="btn btn-primary" onClick={()=> this.addStepInputs()}>+ Add Step</button>
-            </div> 
+            </div> */}
             
             <input type="submit" className="btn btn-secondary"></input>
           </fieldset>
@@ -231,5 +228,5 @@ class CreateRecipe extends Component {
 
 
  
-export default withFirebase(CreateRecipe);
+export default CreateRecipe;
 

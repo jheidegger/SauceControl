@@ -1,6 +1,7 @@
 import React, { useState, useEffect, Component } from 'react';
  
 import * as ROUTES from '../../constants/routes';
+
 import Button from 'react-bootstrap/Button'
 import { withFirebase } from '../Firebase';
 import app from 'firebase/app';
@@ -24,6 +25,11 @@ class CreateRecipe extends Component {
     }
     
     handleChange = (event) => {
+        this.props.firebase.db.collection("recipes").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                console.log(`${doc.id} => ${doc.data()}`);
+            });
+        });
         this.setState({[event.target.name]: event.target.value})
     }
 
@@ -231,5 +237,5 @@ class CreateRecipe extends Component {
 
 
  
-export default withFirebase(CreateRecipe);
+export default CreateRecipe;
 

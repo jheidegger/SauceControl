@@ -1,4 +1,4 @@
-import app from 'firebase';
+import app from 'firebase/app';
 
 const config = {
   apiKey: "AIzaSyCDqiQUjFutaS5jkn7KxKoEAqR_uoIY-nY",
@@ -13,20 +13,12 @@ const config = {
 class Firebase {
   constructor() {
     app.initializeApp(config);
-    /* app.initializeApp({
+    app.initializeApp({
       apiKey: "AIzaSyCDqiQUjFutaS5jkn7KxKoEAqR_uoIY-nY",
       authDomain: "saucecontrol-bc59e.firebaseapp.com",
       projectId: 'saucecontrol-bc59e'
-    }); */
-    this.db = app.firestore();
-  }
-
-  async dump_database() {
-    this.db.collection("recipes").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          console.log(`${doc.id} => ${doc.data()}`);
-      });
-  });
+    });
+    var db = firebase.firestore();
   }
 }
 

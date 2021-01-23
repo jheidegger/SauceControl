@@ -22,7 +22,7 @@ class Firebase {
   }
 
   async dump_database() {
-    this.db.collection("recipes").get().then((querySnapshot) => {
+    this.props.firebase.db.collection("recipes").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
           console.log(`${doc.id} => ${doc.data()}`);
       });

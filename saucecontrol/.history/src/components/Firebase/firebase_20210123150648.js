@@ -18,15 +18,7 @@ class Firebase {
       authDomain: "saucecontrol-bc59e.firebaseapp.com",
       projectId: 'saucecontrol-bc59e'
     }); */
-    this.db = app.firestore();
-  }
-
-  async dump_database() {
-    this.db.collection("recipes").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-          console.log(`${doc.id} => ${doc.data()}`);
-      });
-  });
+    var db = app.firestore();
   }
 }
 

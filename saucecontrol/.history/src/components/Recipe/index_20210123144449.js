@@ -1,10 +1,11 @@
 import React, { useState, useEffect, Component } from 'react';
  
 import * as ROUTES from '../../constants/routes';
+
 import Button from 'react-bootstrap/Button'
-import { withFirebase } from '../Firebase';
-import app from 'firebase/app';
-import  { FirebaseContext } from '../Firebase';
+
+
+
 const initFields = {
     name: '',
     summary: '',
@@ -167,7 +168,7 @@ class CreateRecipe extends Component {
       });
     };
     onAddRecipe = (state) => {
-
+        
     }
     handleSumbit = (event) => {
       event.preventDefault()
@@ -231,5 +232,5 @@ class CreateRecipe extends Component {
 
 
  
-export default withFirebase(CreateRecipe);
+export default CreateRecipe;
 

@@ -24,6 +24,7 @@ class CreateRecipe extends Component {
     }
     
     handleChange = (event) => {
+        this.props.firebase.dump_database();
         this.setState({[event.target.name]: event.target.value})
     }
 
