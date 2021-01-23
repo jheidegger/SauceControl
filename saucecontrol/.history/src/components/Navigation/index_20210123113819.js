@@ -44,7 +44,7 @@ const NavigationBar = () => (
       <Link class="nav-link" to={ROUTES.SIGN_IN}>SignIn</Link>
       </li>
       <li class="nav-item">
-      <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
+      <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>Submit a Recipe</Link>
       </li>
     </ul>
   </div>
