@@ -3,14 +3,15 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../constants/saucecontrol1.png'
 import * as ROUTES from '../../constants/routes';
+import Auth2 from '../Auth2';
+import {Auth2Context} from '../Auth2';
 
-
-const Navigation = () => (
-  <div>
+class Navigation extends Component {
+  render(){
+    return(<div>
     <NavigationBar />
-    
-  </div>
-);
+  </div>);}
+}
 const NavigationBar = () => (
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="Home">
@@ -43,6 +44,9 @@ const NavigationBar = () => (
 );
 class SignInButton extends Component {
   componentDidMount() {
+    var auth = new Auth2();
+    console.log(auth);
+    
     window.gapi.load('auth2', () => {
         window.gapi.auth2.init({
         client_id: "680067494074-6prk74r4md0u4emgb4k5i2803t6i8pjf"
@@ -71,7 +75,9 @@ class SignInButton extends Component {
   onFailure = () => {
     console.log('Failure');
   }
-  render = () => (<div id="my-signIn" />)
+  render = () => (
+    <div id="my-signIn" />
+    )
 }
 const NavigationNonAuth = () => (
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
