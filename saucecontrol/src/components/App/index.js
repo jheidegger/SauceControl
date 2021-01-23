@@ -10,6 +10,7 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 
 import * as ROUTES from '../../constants/routes';
+import CreateRecipe from '../Recipe';
 
 const App = () => (
   
@@ -25,8 +26,8 @@ const App = () => (
       <Route exact path={ROUTES.HOME} component={HomePage} />
       <Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
       <Route exact path={ROUTES.ADMIN} component={AdminPage} />
+      <Route exact path={ROUTES.CREATE_RECIPE} component={CreateRecipe} />
     </div>
   </Router>
 );
-
 export default App;
