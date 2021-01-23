@@ -10,9 +10,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const initFields = {
     name: '',
+    summary: '',
     picture: '',
-    ingredients: [],
-    instructions: [],
+    ingredients: [{name: "", amount:""}],
+    steps: [],
     times: [],
     serves: '',
     tags: []
@@ -24,83 +25,203 @@ class CreateRecipe extends Component {
         this.state = {... initFields};
     }
 
-  
-   
-    handleChange = event => {
-        // add validation for fields
-        var {name, value} = event.target;
-        this.setState({[name] : value});
+    handleChange = (event) => {
+        this.setState({[event.target.name]: event.target.value})
     }
 
-    handleSubmit = event => {
-        event.preventDefault();
-        console.log("button!");
-        //this.props.update(this.state);
-        //this.props.history.push(ROUTES.PROFILE);
+    handleIngredientNameChange = (event, ingredientIndex) => {
+      let newIngredientName = event.target.value;
+      this.setState((prev) => {
+        return {
+          ...prev,
+          ingredients: prev.ingredients.map((ingredient, index) => {
+            if (index == ingredientIndex) {
+              return { ...ingredient, name: newIngredientName};
+            } 
+            return ingredient;
+          }),
+        };
+      });
+    };
 
-        //this.props.addOrEdit(values);
+    handleIngredientAmountChange = (event, ingredientIndex) => {
+      let newIngredientAmount = event.target.value;
+      this.setState((prev) => {
+        return {
+          ...prev,
+          ingredients: prev.ingredients.map((ingredient, index) => {
+            if (index == ingredientIndex) {
+              return { ...ingredient, amount: newIngredientAmount};
+            } 
+            return ingredient;
+          }),
+        };
+      });
+    };
+
+    addIngredientInputs = () => {
+      this.setState((prev) => {
+          return {
+            ...prev,
+            ingredients: [...prev.ingredients, { name: "", amount:"" }],
+          };
+        });
     }
+
+    removeIngredientInput = (event, ingredientIndex) => {
+      event.preventDefault()
+      this.setState({
+        ingredients: this.state.ingredients.filter((ingredient, removedIngredient) => removedIngredient !== ingredientIndex )
+      })
+    }
+
+    renderIngredientInputs = () => {
+      return this.state.ingredients.map((ingredient, index) => {
+        return (
+          <div key={`name ${index}`} 
+            className="form-group">
+
+            <input className="mb-3"
+              value={this.state.ingredients[index].name}
+              onChange={(event) => this.handleIngredientNameChange(event, index)}
+              placeholder="Name"
+              name="name"
+            />
+
+            <input
+              value={this.state.ingredients[index].amount}
+              onChange={(event) => this.handleIngredientAmountChange(event, index)}
+              placeholder="Amount"
+              name="amount"
+            />
+            <br></br>
+            <Button variant="outline-secondary" onClick={(e)=>this.removeIngredientInput(e,index)}>{this.state.ingredients[index].name ? `Delete ${this.state.ingredients[index].name}` : `Delete Ingredient`}</Button>
+          </div>
+        );
+      });
+    };
+
+    handleStepChange = (e, stepIndex) => {
+      let newStep = e.target.value;
+      this.setState((prev) => {
+        return {
+          ...prev,
+          steps: prev.steps.map((step, index) => {
+            if (index == stepIndex) {
+              return { ...step, step_summary: newStep};
+            } 
+            return step;
+          }),
+        };
+      });
+    };
+
+    addStepInputs = () => {
+      this.setState((prev) => {
+        return {
+          ...prev,
+          steps: [...prev.steps, ""],
+        };
+      });
+    };
+
+    removeStepInput = (event, stepIndex) => {
+      event.preventDefault()
+      this.setState({
+        steps: this.state.steps.filter((step, removedStep) => removedStep !== stepIndex )
+      })
+    }
+
+    renderStepInputs = () => {
+      return this.state.steps.map((step, index) => {
+        return (
+          <div key={index} className="form-group">
+            <fieldset>
+              <textarea
+                placeholder={`Step${index+1}`}
+                name="rec_steps"
+                id="textArea"
+                className="form-control"
+                onChange={(e) => this.handleStepChange(e, index)}
+                value={step.step_summary}
+              />
+            <button className="btn btn-secondary" type="button" onClick={(e)=>this.removeStepInput(e,index)}>{`Delete Step ${index+1}`}</button>
+            </fieldset>
+          </div>
+        );
+      });
+    };
+
+    handleStepChange = (e, stepIndex) => {
+      let newStep = e.target.value;
+      this.setState((prev) => {
+        return {
+          ...prev,
+          steps: prev.steps.map((step, index) => {
+            if (index == stepIndex) {
+              return { ...step, step_summary: newStep};
+            } 
+            return step;
+          }),
+        };
+      });
+    };
+
+    handleSumbit = (event) => {
+      event.preventDefault()
+      this.props.onAddRecipe(this.state)
+      this.props.history.push('/')
+
+  }
     
 
     render() { 
 
     return (
       <div>
-          This is recipe creation
-           
-        //<ProfilePicture />
-        
-        <form autoComplete="off">
-          <div className="form-row">
-            <h3>Share your Culinary Genius</h3> 
-          </div>
-          <div className="form-row">
-            <h5>Name</h5>
-            <input 
-              className="form-control" 
-              name="Recipe Name"
-              defaultValue={name}
-              onChange={this.handleChange}
-            />
-          </div>
+         <h1>Add a new recipe!</h1>
+        <form onSubmit={this.handleSumbit} >
+          <fieldset>
+            <div class="form-group">
+              <label for="inputDefault">Title</label>
+              <input 
+                type="inputDefault" 
+                name="title"
+                class="form-control" 
+                id="inputDefault"
+                placeholder="Enter title"
+                onChange={this.handleChange}
+                ></input>
+            </div>
 
-          {/* 
-          <div className="form-row">
-          <h5>Bio</h5>
-            <textarea 
-              className="form-control" 
-              placeholder={this.props.data.bio}
-              name="bio"
-              defaultValue={bio}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-row">
-              <h3>Private Information</h3>
-          </div>
-          <div className="form-row">
-          <h5>Email: </h5>
-          <p>{email}</p>
-          </div>
-          <div className="form-row">
-          <h5>Phone</h5>
-            <input 
-              className="form-control" 
-              placeholder="XXX-XXX-XXXX" 
-              name="phone"
-              defaultValue={phone}
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-row"><Button
-          type="submit" 
-          value="Submit Changes"
-          onClick={this.handleSubmit}>Submit Changes</Button></div>
-          
-        </form> 
-         */}
-      </form>
-     </div>
+            <div className="form-group">
+                <label forHtml="textArea">Summary </label>
+                <textarea 
+                  className="form-control"
+                  id="textArea"
+                  rows="3"
+                  name="summary"
+                  onChange={this.handleChange} 
+                  placeholder="80 characters max"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Ingredients</label>
+              {this.renderIngredientInputs()}
+              <button type="button" className="btn btn-primary" onClick={()=> this.addIngredientInputs()}>+ Add Ingredient</button>
+            </div>
+
+            <div class="form-group">
+              <label forHtml="textArea">Steps</label>
+              {this.renderStepInputs()}
+              <button type="button" className="btn btn-primary" onClick={()=> this.addStepInputs()}>+ Add Step</button>
+            </div>
+            
+            <input type="submit" className="btn btn-secondary"></input>
+          </fieldset>
+        </form>
+        <div className="col-4"></div>
+  </div>
        
     );
     }
@@ -109,3 +230,4 @@ class CreateRecipe extends Component {
 
  
 export default CreateRecipe;
+
