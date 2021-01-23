@@ -3,18 +3,14 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../constants/saucecontrol1.png'
 import * as ROUTES from '../../constants/routes';
-import Auth2 from '../Auth2';
-import {Auth2Context} from '../Auth2';
 
-class Navigation extends Component {
-  constructor(props) {
-    super(props)
-  }
-  render(){
-    return(<div>
+
+const Navigation = () => (
+  <div>
     <NavigationBar />
-  </div>);}
-}
+    
+  </div>
+);
 const NavigationBar = () => (
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="Home">
@@ -38,10 +34,10 @@ const NavigationBar = () => (
       <Link class="nav-link" to={ROUTES.LANDING}>LandingPage</Link>
       </li>
       <li class="nav-item">
-      <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
+      <SignInButton/>
       </li>
       <li class="nav-item">
-      <SignInButton/>
+      <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
       </li>
      
     </ul>
@@ -51,14 +47,10 @@ const NavigationBar = () => (
 );
 class SignInButton extends Component {
   componentDidMount() {
-    //var auth = new Auth2();
-    //console.log(auth);
-    
     window.gapi.load('auth2', () => {
-        this.auth2 = window.gapi.auth2.init({
+        window.gapi.auth2.init({
         client_id: "680067494074-6prk74r4md0u4emgb4k5i2803t6i8pjf"
     }).then(() => {
-      console.log(this.auth2.isSignedIn)
         window.gapi.signin2.render('my-signIn', {
           'scope': 'profile email',
           'width': 120,
@@ -68,14 +60,10 @@ class SignInButton extends Component {
           'onsuccess': this.onSuccess,
           'onfailure': this.onFailure
         })
-        
       }) 
-    })
-    
-    
+    })    
   }
   onSuccess = (user) => {
-    
     var profile = user.getBasicProfile();
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
@@ -83,15 +71,11 @@ class SignInButton extends Component {
     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     var id_token = user.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
-    console.log(user);
-    sessionStorage.setItem("userData", JSON.stringify(user.getBasicProfile()));
   }
   onFailure = () => {
     console.log('Failure');
   }
-  render = () => (
-    <div id="my-signIn" />
-    )
+  render = () => (<div id="my-signIn" />)
 }
 const NavigationNonAuth = () => (
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
