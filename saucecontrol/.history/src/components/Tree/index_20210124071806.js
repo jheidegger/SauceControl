@@ -76,9 +76,9 @@ class Tree extends Component {
             chunk => 
             <div class="row">
                 {chunk.map(item =>
-                    <div className="col-md-3 col=sm-3 col-lg-2 format">
+                    <div className="col-md-6 col=sm-6 col-lg-3 format">
                     <PreviewCard id={item}/>
-                </div>)}</div>));
+                </div>)})</div>));
     }
 };
 export default withFirebase(Tree);

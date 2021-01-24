@@ -21,7 +21,6 @@ class Tree extends Component {
             }); 
             var cur = recipes[this.props.match.params.recipe]
             var ancestors = [];
-            var sauceboss = this.props.match.params.recipe;
             console.log(cur)
             var descendants = [];
             while(cur.parent !== "") {
@@ -30,12 +29,9 @@ class Tree extends Component {
                 cur = recipes[cur.parent]
             }
             console.log("building from " + ancestors[ancestors.length - 1])
-             console.log(ancestors)
+             
             var stack = []
-            if (ancestors[ancestors.length - 1] !== undefined) {
-                sauceboss = ancestors[ancestors.length - 1]
-            }
-            stack.push([sauceboss,0])
+            stack.push([ancestors[ancestors.length - 1],0])
              
             while(stack.length > 0) {
                 var cur = stack.shift();
@@ -51,34 +47,27 @@ class Tree extends Component {
     } 
   render() {
         var d = this.state.descendants;
-        var rows = [];
-        var temprow = []
+        var rows = [2];
         for (var i = 0; i < d.length; i++) {
-            
-            if (d[i][1] != lasti) {
-                rows.push(temprow)
-                temprow = []
-            }
-            temprow.push(d[i][0])
-            var lasti = d[i][1]
-            /*
+
             if (rows[d[i][1]] !== undefined) {
                 rows[d[i][1]] = rows[d[i][1]].concat(d[i][0]) 
+                //rows[0].push(d[i][0])
             } else {
                 rows[d[i][1]] = d[i][0]
             }
-            */
+
+            
         }
-        rows.push(temprow)
-        console.log(rows)
+        console.table(rows)
         //<PreviewCard id={elem}/>
         return (rows.map(
             chunk => 
             <div class="row">
                 {chunk.map(item =>
-                    <div className="col-md-3 col=sm-3 col-lg-2 format">
+                    <div className="col-md-6 col=sm-6 col-lg-3 format">
                     <PreviewCard id={item}/>
-                </div>)}</div>));
+                </div>)})</div>));
     }
 };
 export default withFirebase(Tree);

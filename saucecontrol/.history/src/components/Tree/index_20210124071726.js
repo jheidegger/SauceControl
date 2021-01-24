@@ -35,7 +35,7 @@ class Tree extends Component {
             if (ancestors[ancestors.length - 1] !== undefined) {
                 sauceboss = ancestors[ancestors.length - 1]
             }
-            stack.push([sauceboss,0])
+            stack.push(sauceboss,0])
              
             while(stack.length > 0) {
                 var cur = stack.shift();
@@ -76,9 +76,9 @@ class Tree extends Component {
             chunk => 
             <div class="row">
                 {chunk.map(item =>
-                    <div className="col-md-3 col=sm-3 col-lg-2 format">
+                    <div className="col-md-6 col=sm-6 col-lg-3 format">
                     <PreviewCard id={item}/>
-                </div>)}</div>));
+                </div>)})</div>));
     }
 };
 export default withFirebase(Tree);

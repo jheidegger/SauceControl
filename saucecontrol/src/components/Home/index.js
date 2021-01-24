@@ -1,16 +1,49 @@
 import React, { Component } from 'react';
+import PreviewCard from '../PreviewCard';
+import { withFirebase } from '../Firebase';
+
+const initFields = {
+  user: null,
+  recipes: []
+}
 
 class Home extends Component {
   constructor(props) {
     super(props)
-    this.state = {user:null};
+    this.state = {... initFields};
   }
   componentDidMount() {
     const data = JSON.parse(sessionStorage.getItem('userData'));
     let user=data;
     console.log(user);
     this.setState({user: user});
+
+    var email = this.getEmail();
+    this.grabRecipes(email);
+
   }
+
+  grabRecipes = (email) => {
+    this.props.firebase.db.collection("recipes").get().then(this.onResult);
+  }
+
+  onResult = (querySnapshot) => {
+   var recipes = [];
+   var search = this.getEmail();
+   console.log(search)
+    querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        if (doc.data().user !== undefined) {    
+          if(doc.data().user.includes(search)){
+                  console.log(doc.id, " => ", doc.data().user);
+                  recipes.push(doc.id);
+                  console.log(recipes)
+           }
+        }
+        });
+    this.setState({recipes: recipes});
+  } 
+
   isSignedIn() {
     return (this.state.user !== null)
   }
@@ -47,11 +80,17 @@ class Home extends Component {
     }
   }
   render(){
-
+    var recipeCards = this.state.recipes.map((id)=><PreviewCard id={id}/>)
     return(
-  <div class="container-fluid">
-    <div class="row"><h1 class="s-4 animate__animated animate__fadeInLeft">Hello {this.getFirstName()}</h1></div>
-  </div>);
+      <div class="container-fluid bg">
+        <div class="row"><h1 class="s-4 animate__animated animate__fadeInLeft">Hello {this.getFirstName()} let's check out those recipes!</h1></div>
+            <div class="d-flex justify-content-center">
+                <div class="col-3">
+                  {recipeCards}
+                </div> 
+            </div>
+        </div>
+        );
   }
 }
 class userData extends Component {
@@ -100,10 +139,15 @@ class userData extends Component {
       return "no Email";
     }
   }
+
+
+
+
+
   render(){
 
     return;
   }
 }
 
-export default Home;
+export default withFirebase(Home);
