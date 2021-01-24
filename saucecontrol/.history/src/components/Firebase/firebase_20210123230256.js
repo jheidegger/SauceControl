@@ -34,8 +34,7 @@ class Firebase {
     return recipes
   }
   async whiteout_recipe(state) {
-    console.log("parent to be invisd is " + state)
-    this.db.collection("recipes").doc(state).update({visible: false})
+    this.db.collection("recipes").doc(state.parent).update({visible: false})
   }
   async insert_recipe(state) {
     var email = "none";
@@ -50,7 +49,7 @@ class Firebase {
       summary: state.summary,
       parent: (state.parent !== undefined ? state.parent : undefined),
       user: email,
-      visible: state.visible
+      visible: this.state.visible
   })
     var db = this.db;
     recipeId.then(function(docRef){

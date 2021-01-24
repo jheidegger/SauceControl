@@ -29,7 +29,6 @@ class CreateRecipe extends Component {
     componentDidMount() {
     if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
             this.setState(this.props.location.state.parentState);
-            this.setState({editMode :this.props.location.state.editMode, parent: this.props.location.state.parent});
         }
       const data = JSON.parse(sessionStorage.getItem('userData'));
       let user=data;
@@ -198,12 +197,7 @@ class CreateRecipe extends Component {
     handleSumbit = (event) => {
       event.preventDefault()
       console.log(this.state.name)
-      
-      if (this.state.editMode == 'edit') {
-          this.props.firebase.whiteout_recipe(this.state.parent)
-      } else {
-        this.props.firebase.insert_recipe(this.state)
-      }
+      this.props.firebase.insert_recipe(this.state)
       this.props.history.push('/')
   }
     

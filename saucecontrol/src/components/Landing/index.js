@@ -21,6 +21,7 @@ class Landing extends Component {
     );
   }
   enter = () => {
+    console.log(this.props);
     this.props.history.push(ROUTES.HOME);
   }
   
