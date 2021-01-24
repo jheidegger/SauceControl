@@ -41,14 +41,9 @@ class RecipeViewer extends Component {
         {ingredients}
         <h3>Steps</h3>
         {steps}
-        <Link to={{
+        <Link type=button to={{
             pathname: '/recipe-submit',
-            state: {
-                parentState: this.state,
-            }
-          }}> 
-          <button>Customize</button>
-          </Link>
+          }}>Customize</Link>
         )
         </div>
         )
