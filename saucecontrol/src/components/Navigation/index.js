@@ -27,7 +27,7 @@ class Navigation extends Component {
   render(){
     return(<div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="Home">
+    <a class="navbar-brand" href="/Home">
         <img src={logo} alt="logo"  height="60"/>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,32 +37,31 @@ class Navigation extends Component {
     <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <Link class="nav-link" to={ROUTES.HOME}>Home</Link>
+      <Link class="nav-link" to={ROUTES.LANDING}>Entrance</Link>
       </li>
       <li class="nav-item">
         <Link class="nav-link" to={ROUTES.ACCOUNT}>Account</Link>
       </li>
-      <li class="nav-item">
-      <Link class="nav-link" to={ROUTES.ADMIN}>Admin</Link>
-      </li>
-      <li class="nav-item">
-      <Link class="nav-link" to={ROUTES.LANDING}>LandingPage</Link>
-      </li>
+      
       <li class="nav-item">
       <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
       </li>
-      <li class="nav-item">
-      <SignInButton firebase={this.props.firebase}/>
-      </li>
-     
-    </ul>
-    <SearchField
+      <li class="nav-item mx-3 mt-1">
+      <SearchField
             placeholder="Search..."
             onChange={this.change}
             onEnter={this.search}
             onSearchClick={this.search}
             classNames="test-class"
             />
+      </li>
+      <li class="nav-item">
+      <SignInButton firebase={this.props.firebase}/>
+      </li>
+      
+      
+    </ul>
+    
   </div>
 </nav>
   </div>);}
@@ -122,7 +121,7 @@ class SignInButton extends Component {
 }
 const NavigationNonAuth = () => (
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="Home">Mayfly</a>
+  <a class="navbar-brand" href="Home">saucecontrol</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

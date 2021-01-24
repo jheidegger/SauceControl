@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withFirebase } from '../Firebase';
+import PreviewCard from "../PreviewCard";
 
 const init_fields = {
     recipes: [],
@@ -26,10 +27,10 @@ class SearchResults extends Component {
        
        var recipes = [];
        var recipeTitles = [];
-       var search = this.params.search;
+       var search = this.params.search.toLowerCase();
         querySnapshot.forEach(function(doc) {
             // doc.data() is never undefined for query doc snapshots
-                if(doc.data().title.includes(search)){
+                if(doc.data().title.toLowerCase().includes(search)){
                     console.log(doc.id, " => ", doc.data().title);
                     recipes.push(doc.id);
                     recipeTitles.push(doc.data().title);
@@ -50,9 +51,15 @@ class SearchResults extends Component {
         
     }
     render(){
-         //console.log(this.state)  
+        var recipeCards = this.state.recipes.map((id)=><PreviewCard id={id}/>)
         return(
-            <h1>{this.state.recipeTitles}</h1>
+            <div class="d-flex justify-content-center">
+                <div class="col-3">
+                {recipeCards}
+                </div>
+                
+            </div>
+            
         );
     }
 }
