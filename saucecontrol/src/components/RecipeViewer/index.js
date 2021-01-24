@@ -1,6 +1,9 @@
 import React, { useState, useEffect, Component } from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import { withFirebase } from '../Firebase';
+
+import PreviewCard from '../PreviewCard';
+
 const initFields = {
     title: "",
     steps: [],
@@ -40,6 +43,7 @@ class RecipeViewer extends Component {
         {ingredients}
         <h3>Steps</h3>
         {steps}
+        <PreviewCard id="c0Q5VY16nKxXrNJqRlSD"></PreviewCard>
         </div>
         
         )
