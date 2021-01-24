@@ -214,7 +214,6 @@ class CreateRecipe extends Component {
                   rows="3"
                   name="summary"
                   onChange={this.handleChange} 
-                  value={this.state.summary}
                   placeholder="80 characters max"></textarea>
             </div>
 
