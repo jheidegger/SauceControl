@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { withFirebase } from '../Firebase';
-import {Row,Col,Card,Button} from 'react-bootstrap';
+import {Row,Col,Card,Button,Image} from 'react-bootstrap';
 import * as ROUTES from '../../constants/routes';
 import { Link, withRouter, Route } from 'react-router-dom';
 
@@ -19,7 +19,8 @@ class PreviewCard extends Component {
     onResult = (querySnapshot) => {
         console.log(querySnapshot.data())
         this.setState({summary:querySnapshot.data().summary,
-                        title:querySnapshot.data().title})
+                        title:querySnapshot.data().title,
+                        img:querySnapshot.data().photoURL});
         // add the cover image and time fields to this later
     } 
     onError  = () => {
@@ -32,18 +33,18 @@ class PreviewCard extends Component {
 
     render() {
         return (
-        <Link to={'/recipes/'+this.props.id}>
-        <div class="card" hoverable>
-            <img src="..." class="card-img-top" alt="..."/>
+        <div class="card">
+            <img src={this.state.img}  height="300" width="300" class="card-img-top" alt="food"/>
             <div class="card-body">
-                <h5 class="card-title">{this.state.title}</h5>
+                <h4 class="card-title">{this.state.title}</h4>
                 <p class="card-text">{this.state.summary}</p>
+                <a href={'/recipes/'+this.props.id} class="btn btn-primary">View</a>
             </div>
             <div class="card-footer">
                 <small class="text-muted">PUT TOTAL TIME</small>
             </div>
+            
         </div>
-        </Link>
         );
     }
 }
