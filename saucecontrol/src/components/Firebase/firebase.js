@@ -38,7 +38,15 @@ class Firebase {
   }
   checkUser = (email) => {
     var query = this.db.collection("Users").where("email", "==", email).get();
+    var db = this.db;
     query.then(function(querySnapshot) {
+      console.log(querySnapshot.size)
+      if (querySnapshot.size === 0) {
+        db.collection("Users").add({
+          email: email,
+          recipes: 'none'
+        })
+      }
       querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
@@ -52,8 +60,6 @@ class Firebase {
     }
 }
 }
-
-
 
 
 export default Firebase;
