@@ -14,9 +14,7 @@ const initFields = {
     times: [],
     serves: '',
     tags: [],
-    parent: "",
-    mode: "fork",
-    visible: true
+    parent: ""
 }
 
 class CreateRecipe extends Component {
@@ -27,10 +25,10 @@ class CreateRecipe extends Component {
     }
     
     componentDidMount() {
-        if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
-            this.setState(this.props.location.state.parentState);
+        if (this.props.parentState !== null) {
+            this.state = this.props.parentState;
         }
-        //{ ingredients: this.props.location.state.parentState.ingredients}
+        
     }
 
     handleChange = (event) => {

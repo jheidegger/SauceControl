@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Component } from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import { withFirebase } from '../Firebase';
-import {Link} from 'react-router-dom'
 const initFields = {
     title: "",
     steps: [],
@@ -43,15 +42,10 @@ class RecipeViewer extends Component {
         {steps}
         <Link to={{
             pathname: '/recipe-submit',
-            state: {
-                parentState: this.state,
-            }
-          }}> 
-          <button>Customize</button>
-          </Link>
+          }}>Customize</Link>
         )
         </div>
-        )
+        
     }
 }
 

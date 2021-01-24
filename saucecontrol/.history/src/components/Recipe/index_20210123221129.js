@@ -27,7 +27,9 @@ class CreateRecipe extends Component {
     }
     
     componentDidMount() {
-        if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
+        console.log(this.props)
+        console.log(this.props.location.state.parentState)
+        if (this.props.location.state.parentState !== null) {
             this.setState(this.props.location.state.parentState);
         }
         //{ ingredients: this.props.location.state.parentState.ingredients}
