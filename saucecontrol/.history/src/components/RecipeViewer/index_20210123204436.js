@@ -29,16 +29,11 @@ class RecipeViewer extends Component {
         .doc(this.params.recipe).onSnapshot(this.onResult, this.onError)
     }
     render () {
-        console.log(this.state.ingredients)
         console.log("rendering")
-    let steps = this.state.steps.map((element) => <div>{element.step_summary}</div>)
-    let ingredients = this.state.ingredients.map((element) => <div>{element.amount} {element.name}</div>)
+    let steps = this.state.steps.map((name,value) => <div>{name}:{value}</div>)
         return (
         <div><h2>{this.state.title}</h2>
         <p>{this.state.summary}</p>
-        <h3>Ingredients</h3>
-        {ingredients}
-        <h3>Steps</h3>
         {steps}
         </div>
         

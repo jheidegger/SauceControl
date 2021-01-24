@@ -28,6 +28,12 @@ class Firebase {
       });
   });
   }
+  async getRecipe(recipeTitle) {
+    const recipes = await this.db.collection('recipes').doc(recipeTitle).get().data();
+    console.log(recipes)
+    return recipes
+  }
+  
   async insert_recipe(state) {
     var email = "none";
     if(state.user !== null) {
