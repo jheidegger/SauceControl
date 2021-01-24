@@ -43,8 +43,6 @@ class Firebase {
     if(state.user !== null) {
       email = state.user.jt;
     }
-    var par = state.parent;
-
     var db = this.db;
     var recipeId = await this.db.collection("recipes").add({
       title: state.title,
@@ -57,15 +55,9 @@ class Firebase {
       date: Date.now(),
       children: []
     }).then(function(docRef){
-      console.log("doc ref is ")
-      console.log(docRef.path.split("/")[1])
-      console.log("par is")
-      if (par !== undefined && docRef !== undefined) {
-        db.collection("recipes").doc(par).update({
-          "children": firebase.firestore.FieldValue.arrayUnion(docRef.path.split("/")[1])
-      });
-      }
-      var query = db.collection("Users").where("email", "==", email).get();
+      
+      console.log(docRef.id);
+      var query =db.collection("Users").where("email", "==", email).get();
       
       query.then(function(querySnapshot) {
         console.log(querySnapshot.size)
@@ -85,9 +77,7 @@ class Firebase {
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-    console.log('rec id is ')
-      console.log(recipeId);
-    if (state.parent !== undefined && recipeId !== undefined) {
+    if (state.parent !== undefined) {
       this.db.collection("recipes").doc(state.parent).update({
         "children": firebase.firestore.FieldValue.arrayUnion(recipeId)
     });

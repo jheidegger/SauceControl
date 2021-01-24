@@ -61,11 +61,11 @@ class Firebase {
       console.log(docRef.path.split("/")[1])
       console.log("par is")
       if (par !== undefined && docRef !== undefined) {
-        db.collection("recipes").doc(par).update({
+        this.db.collection("recipes").doc(par).update({
           "children": firebase.firestore.FieldValue.arrayUnion(docRef.path.split("/")[1])
       });
       }
-      var query = db.collection("Users").where("email", "==", email).get();
+      var query =db.collection("Users").where("email", "==", email).get();
       
       query.then(function(querySnapshot) {
         console.log(querySnapshot.size)

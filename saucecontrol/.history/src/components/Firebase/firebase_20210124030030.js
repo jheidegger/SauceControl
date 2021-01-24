@@ -58,14 +58,13 @@ class Firebase {
       children: []
     }).then(function(docRef){
       console.log("doc ref is ")
-      console.log(docRef.path.split("/")[1])
-      console.log("par is")
+      console.log(docRef.path.split("/",1))
       if (par !== undefined && docRef !== undefined) {
-        db.collection("recipes").doc(par).update({
-          "children": firebase.firestore.FieldValue.arrayUnion(docRef.path.split("/")[1])
+        this.db.collection("recipes").doc(state.parent).update({
+          "children": firebase.firestore.FieldValue.arrayUnion(docRef)
       });
       }
-      var query = db.collection("Users").where("email", "==", email).get();
+      var query =db.collection("Users").where("email", "==", email).get();
       
       query.then(function(querySnapshot) {
         console.log(querySnapshot.size)

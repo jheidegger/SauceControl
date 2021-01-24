@@ -6,6 +6,7 @@
     "animate.css": "^4.1.1",
     "bootstrap": "^4.6.0",
     "firebase": "^5.11.1",
+    "firebase-admin": "^9.4.2",
     "react": "^16.6.3",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^16.6.3",

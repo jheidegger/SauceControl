@@ -1,6 +1,7 @@
 import app from 'firebase';
-import firebase from 'firebase/app'
+const functions = require('firebase-functions');
 const admin = require('firebase-admin')
+const fieldValue = admin.firestore.FieldValue; 
 const config = {
   apiKey: "AIzaSyCDqiQUjFutaS5jkn7KxKoEAqR_uoIY-nY",
   authDomain: "saucecontrol-bc59e.firebaseapp.com",
@@ -43,10 +44,8 @@ class Firebase {
     if(state.user !== null) {
       email = state.user.jt;
     }
-    var par = state.parent;
-
-    var db = this.db;
-    var recipeId = await this.db.collection("recipes").add({
+    
+    var recipeId = this.db.collection("recipes").add({
       title: state.title,
       ingredients: state.ingredients,
       steps: state.steps,
@@ -56,16 +55,18 @@ class Firebase {
       visible: state.visible,
       date: Date.now(),
       children: []
-    }).then(function(docRef){
-      console.log("doc ref is ")
-      console.log(docRef.path.split("/")[1])
-      console.log("par is")
-      if (par !== undefined && docRef !== undefined) {
-        db.collection("recipes").doc(par).update({
-          "children": firebase.firestore.FieldValue.arrayUnion(docRef.path.split("/")[1])
-      });
-      }
-      var query = db.collection("Users").where("email", "==", email).get();
+    })
+    if (state.parent !== undefined) {
+      this.db.collection("recipes").doc(state.parent).update({
+
+        "children": FieldValue.arrayUnion(recipeId)
+    });
+    }
+    var db = this.db;
+    recipeId.then(function(docRef){
+      
+      console.log(docRef.id);
+      var query =db.collection("Users").where("email", "==", email).get();
       
       query.then(function(querySnapshot) {
         console.log(querySnapshot.size)
@@ -85,13 +86,6 @@ class Firebase {
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-    console.log('rec id is ')
-      console.log(recipeId);
-    if (state.parent !== undefined && recipeId !== undefined) {
-      this.db.collection("recipes").doc(state.parent).update({
-        "children": firebase.firestore.FieldValue.arrayUnion(recipeId)
-    });
-    }
   }
   checkUser = (email) => {
     var query = this.db.collection("Users").where("email", "==", email).get();
