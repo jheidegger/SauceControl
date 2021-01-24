@@ -14,10 +14,7 @@ const initFields = {
     times: [],
     serves: '',
     tags: [],
-    parent: "",
-    mode: "fork",
-    visible: true,
-    user:null
+    parent: ""
 }
 
 class CreateRecipe extends Component {
@@ -26,28 +23,15 @@ class CreateRecipe extends Component {
         super(props);
         this.state = {... initFields};
     }
+    
     componentDidMount() {
-    if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
-            this.setState(this.props.location.state.parentState);
-            this.setState({editMode :this.props.location.state.editMode, parent: this.props.location.state.parent});
+        console.log(this.props)
+        console.log(this.props.location.state.parentState)
+        if (this.props.location.state.parentState !== null) {
+            this.state = this.props.location.state.parentState
+            //this.setState{this.props.location.state.parentState};
         }
-      const data = JSON.parse(sessionStorage.getItem('userData'));
-      let user=data;
-      //console.log(user);
-      this.setState({user: user});
-    }
-
-    isSignedIn() {
-      return (this.state.user !== null)
-    }
-
-    getEmail() {
-      if(this.state.user !==null) {
-        return this.state.user.jt;
-      }
-      else {
-        return "no Email";
-      }
+        
     }
 
     handleChange = (event) => {
@@ -198,12 +182,7 @@ class CreateRecipe extends Component {
     handleSumbit = (event) => {
       event.preventDefault()
       console.log(this.state.name)
-      
-      if (this.state.editMode == 'edit') {
-          this.props.firebase.whiteout_recipe(this.state.parent)
-      } else {
-        this.props.firebase.insert_recipe(this.state)
-      }
+      this.props.firebase.insert_recipe(this.state)
       this.props.history.push('/')
   }
     
@@ -223,7 +202,6 @@ class CreateRecipe extends Component {
                 class="form-control" 
                 id="inputDefault"
                 placeholder="Enter title"
-                value={this.state.title}
                 onChange={this.handleChange}
                 ></input>
             </div>
@@ -236,7 +214,6 @@ class CreateRecipe extends Component {
                   rows="3"
                   name="summary"
                   onChange={this.handleChange} 
-                  value={this.state.summary}
                   placeholder="80 characters max"></textarea>
             </div>
 

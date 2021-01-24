@@ -44,25 +44,11 @@ class RecipeViewer extends Component {
         <Link to={{
             pathname: '/recipe-submit',
             state: {
-                parentState: this.state,
-                editMode: "edit",
-                parent: this.params.recipe
+                state: this.state,
             }
           }}> 
-          <button>Edit</button>
+          <button>Customize</button>
           </Link>
-        <Link to={{
-            pathname: '/recipe-submit',
-            state: {
-                parentState: this.state,
-                editMode: "fork",
-                parent: this.params.recipe
-            }
-          }}> 
-          <button>tAkE iNSpIrAtIOn from this recipe</button>
-          </Link>
-          {/* this should be conditioned on owning the recipe */}
-          
         )
         </div>
         )

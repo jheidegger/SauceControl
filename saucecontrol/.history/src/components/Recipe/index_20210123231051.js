@@ -16,7 +16,7 @@ const initFields = {
     tags: [],
     parent: "",
     mode: "fork",
-    visible: true,
+    visible: true,df
     user:null
 }
 
@@ -199,8 +199,8 @@ class CreateRecipe extends Component {
       event.preventDefault()
       console.log(this.state.name)
       
-      if (this.state.editMode == 'edit') {
-          this.props.firebase.whiteout_recipe(this.state.parent)
+      if (this.state.mode == 'edit') {
+          this.props.firebase.whiteout_recipe(this.state)
       } else {
         this.props.firebase.insert_recipe(this.state)
       }

@@ -198,11 +198,9 @@ class CreateRecipe extends Component {
     handleSumbit = (event) => {
       event.preventDefault()
       console.log(this.state.name)
-      
-      if (this.state.editMode == 'edit') {
-          this.props.firebase.whiteout_recipe(this.state.parent)
-      } else {
-        this.props.firebase.insert_recipe(this.state)
+      this.props.firebase.insert_recipe(this.state)
+      if (this.state.mode == 'edit') {
+          
       }
       this.props.history.push('/')
   }
