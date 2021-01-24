@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchField from "react-search-field";
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../constants/saucecontrol1.png'
@@ -10,6 +11,10 @@ import { withFirebase } from '../Firebase';
 class Navigation extends Component {
   constructor(props) {
     super(props)
+  }
+  search = (value,event) => {
+    console.log(this.props);
+    this.props.history.push("/search/"+value);
   }
   render(){
     return(<div>
@@ -42,6 +47,13 @@ class Navigation extends Component {
       </li>
      
     </ul>
+    <SearchField
+            placeholder="Search..."
+            onChange={this.change}
+            onEnter={this.search}
+            onSearchClick={this.search}
+            classNames="test-class"
+            />
   </div>
 </nav>
   </div>);}
