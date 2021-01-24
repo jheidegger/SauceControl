@@ -63,7 +63,7 @@ class RecipeViewer extends Component {
                 parent: this.params.recipe
             }
           }}> 
-          <button>Edit</button>
+          <button className="btn btn-outline-secondary">Edit</button>
           </Link>
     }}
         let date = <div></div>
@@ -71,6 +71,10 @@ class RecipeViewer extends Component {
             date = this.formatDate(this.state.date)
         }
         return (
+        <div class="container-fluid bg">
+        <div class="d-flex justify-content-center p-1">
+        <div class="col-sm-4">
+        <div class="container-lg signInCard rounded p-2">
         <div><h2>{this.state.title}</h2>
         by {this.state.owner} 
         {date}
@@ -88,7 +92,7 @@ class RecipeViewer extends Component {
                 parent: this.params.recipe
             }
           }}> 
-          <button>Copy and Edit</button>
+          <button className="btn btn-outline-secondary">Copy and Edit</button>
           </Link>
           <Link to={{
             pathname: '/recipe-submit',
@@ -96,11 +100,15 @@ class RecipeViewer extends Component {
                 parent: this.params.recipe
             }
           }}> 
-          <button>History</button>
+          <button className="btn btn-outline-secondary">History</button>
           </Link>
           {/* this should be conditioned on owning the recipe */}
           
         
+        </div>
+        </div>
+        </div>
+        </div>
         </div>
         )
     }

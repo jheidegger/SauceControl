@@ -54,11 +54,13 @@ class SearchResults extends Component {
     render(){
         var recipeCards = this.state.recipes.map((id)=><PreviewCard id={id}/>)
         return(
+            <div class="container-fluid bg">
             <div class="d-flex justify-content-center">
                 <div class="col-3">
                 {recipeCards}
                 </div>
                 
+            </div>
             </div>
             
         );
