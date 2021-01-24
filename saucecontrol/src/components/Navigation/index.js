@@ -24,6 +24,10 @@ class Navigation extends Component {
     console.log(this.props);
     this.props.history.push("/search/"+value);
   }
+  search = (value,event) => {
+    console.log(this.props);
+    this.props.history.push("/search/"+value);
+  }
   render(){
     return(<div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -61,7 +65,6 @@ class Navigation extends Component {
       
       
     </ul>
-    
   </div>
 </nav>
   </div>);}
