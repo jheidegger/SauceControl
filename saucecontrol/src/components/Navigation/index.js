@@ -1,4 +1,5 @@
 import React from 'react';
+import SearchField from "react-search-field";
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../constants/saucecontrol1.png'
@@ -7,21 +8,34 @@ import Auth2 from '../Auth2';
 import {Auth2Context} from '../Auth2';
 import { withFirebase } from '../Firebase';
 
+
+const init_fields = {
+  searchVal:null
+}
 class Navigation extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+  }
+  
+  change  = (value, event) => {
+    
+  }
+  search = (value,event) => {
+    console.log(this.props);
+    this.props.history.push("/search/"+value);
   }
   render(){
     return(<div>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="Home">
-      <img src={logo} alt="logo"  height="60"/>
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
+    <a class="navbar-brand" href="Home">
+        <img src={logo} alt="logo"  height="60"/>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <Link class="nav-link" to={ROUTES.HOME}>Home</Link>
       </li>
@@ -42,9 +56,17 @@ class Navigation extends Component {
       </li>
      
     </ul>
+    <SearchField
+            placeholder="Search..."
+            onChange={this.change}
+            onEnter={this.search}
+            onSearchClick={this.search}
+            classNames="test-class"
+            />
   </div>
 </nav>
   </div>);}
+  
 }
 class SignInButton extends Component {
   constructor(props){
@@ -71,8 +93,6 @@ class SignInButton extends Component {
         
       }) 
     })
-    
-    
   }
   onSuccess = (user) => {
     
