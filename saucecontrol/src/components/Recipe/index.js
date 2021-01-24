@@ -17,6 +17,7 @@ const initFields = {
     parent: "",
     mode: "fork",
     visible: true
+    user:null
 }
 
 class CreateRecipe extends Component {
@@ -25,12 +26,27 @@ class CreateRecipe extends Component {
         super(props);
         this.state = {... initFields};
     }
-    
     componentDidMount() {
-        if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
+    if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
             this.setState(this.props.location.state.parentState);
         }
-        //{ ingredients: this.props.location.state.parentState.ingredients}
+      const data = JSON.parse(sessionStorage.getItem('userData'));
+      let user=data;
+      //console.log(user);
+      this.setState({user: user});
+    }
+
+    isSignedIn() {
+      return (this.state.user !== null)
+    }
+
+    getEmail() {
+      if(this.state.user !==null) {
+        return this.state.user.jt;
+      }
+      else {
+        return "no Email";
+      }
     }
 
     handleChange = (event) => {

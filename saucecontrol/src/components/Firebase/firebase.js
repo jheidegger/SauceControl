@@ -35,15 +35,62 @@ class Firebase {
   }
   
   async insert_recipe(state) {
-    this.db.collection("recipes").add({
+    var email = "none";
+    if(state.user !== null) {
+      email = state.user.jt;
+    }
+    var recipeId = this.db.collection("recipes").add({
       title: state.title,
       ingredients: state.ingredients,
       steps: state.steps,
-      summary: state.summary
+      summary: state.summary,
+      user: email
   })
-  }
-}
+    var db = this.db;
+    recipeId.then(function(docRef){
+      
+      console.log(docRef.id);
+      var query =db.collection("Users").where("email", "==", email).get();
+      
+      query.then(function(querySnapshot) {
+        console.log(querySnapshot.size)
+          if (querySnapshot.size !== 0) {
 
+          querySnapshot.forEach(function(doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            db.collection("Users").doc(doc.id).collection('recipes').add({
+              recipeId:docRef.id
+            })
+          })
+        }
+      })
+    })
+    
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+  }
+  checkUser = (email) => {
+    var query = this.db.collection("Users").where("email", "==", email).get();
+    var db = this.db;
+    query.then(function(querySnapshot) {
+      console.log(querySnapshot.size)
+      if (querySnapshot.size === 0) {
+        db.collection("Users").add({
+          email: email
+        })
+      }
+      querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+}
+}
 
 
 export default Firebase;
