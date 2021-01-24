@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PreviewCard from '../PreviewCard';
+import { withFirebase } from '../Firebase';
 
 const initFields = {
   user: null,
@@ -32,13 +33,14 @@ class Home extends Component {
    console.log(search)
     querySnapshot.forEach(function(doc) {
         // doc.data() is never undefined for query doc snapshots
-            if(doc.data().user.toLowerCase().includes(search)){
-                console.log(doc.id, " => ", doc.data().user);
-                recipes.push(doc.id);
-                console.log(recipes)
-            }
+        if (doc.data().user !== undefined) {    
+          if(doc.data().user.includes(search)){
+                  console.log(doc.id, " => ", doc.data().user);
+                  recipes.push(doc.id);
+                  console.log(recipes)
+           }
+        }
         });
-    console.log(recipeTitles);
     this.setState({recipes: recipes});
   } 
 
@@ -81,7 +83,7 @@ class Home extends Component {
     var recipeCards = this.state.recipes.map((id)=><PreviewCard id={id}/>)
     return(
       <div class="container-fluid">
-        <div class="row"><h1 class="s-4 animate__animated animate__fadeInLeft">Hello {this.getFirstName()}</h1></div>
+        <div class="row"><h1 class="s-4 animate__animated animate__fadeInLeft">Hello {this.getFirstName()} let's check out those recipes!</h1></div>
             <div class="d-flex justify-content-center">
                 <div class="col-3">
                   {recipeCards}
@@ -147,4 +149,4 @@ class userData extends Component {
   }
 }
 
-export default Home;
+export default withFirebase(Home);

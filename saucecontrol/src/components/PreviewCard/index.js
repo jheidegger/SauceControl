@@ -48,7 +48,7 @@ class PreviewCard extends Component {
     render() {
         var img = logo;
         console.log(this.state.img);
-        if(this.state.img !== undefined){
+        if(this.state.img !== undefined && this.state.img !== "none"){
             img = this.state.img;
         }
         let date = <div></div>
