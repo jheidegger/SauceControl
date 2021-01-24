@@ -1,10 +1,14 @@
 import React, { useState, useEffect, Component } from 'react';
  
+import ImageUploader from 'react-images-upload'
 import * as ROUTES from '../../constants/routes';
 import Button from 'react-bootstrap/Button'
 import { withFirebase } from '../Firebase';
 import app from 'firebase/app';
 import  { FirebaseContext } from '../Firebase';
+
+import "./styles.css";
+
 const initFields = {
     title: '',
     summary: '',
@@ -14,10 +18,12 @@ const initFields = {
     times: [],
     serves: '',
     tags: [],
+    user:null,
+    pictureFile: null,
+    pictureFileURL: null,
     parent: "",
     mode: "fork",
     visible: true,
-    user:null,
     date: 0
 }
 
@@ -26,6 +32,7 @@ class CreateRecipe extends Component {
     constructor(props) {
         super(props);
         this.state = {... initFields};
+        this.onDrop = this.onDrop.bind(this);
     }
     componentDidMount() {
     if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
@@ -207,6 +214,19 @@ class CreateRecipe extends Component {
       this.props.history.push('/')
   }
     
+    onDrop = (picture) => {
+      console.log("I write my own handler aha! Here is the picture: ");
+      console.log(picture[0])
+      this.setState({
+        pictureFile: picture[0],
+        pictureFileURL: URL.createObjectURL(picture[0])
+      })
+      
+  
+      /*this.setState({
+        picture: URL.createObjectURL(picture.target.files[0])
+      })*/
+    }
 
     render() { 
 
@@ -251,7 +271,11 @@ class CreateRecipe extends Component {
               {this.renderStepInputs()}
               <button type="button" className="btn btn-primary" onClick={()=> this.addStepInputs()}>+ Add Step</button>
             </div> 
-            
+            <ImageUploader 
+              buttonText='Choose Image'
+              onChange={this.onDrop}
+            />
+            <img className="photo" src={this.state.pictureFileURL}/>
             <input type="submit" className="btn btn-secondary"></input>
           </fieldset>
         </form>
