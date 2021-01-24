@@ -1,14 +1,10 @@
 import React, { useState, useEffect, Component } from 'react';
  
-import ImageUploader from 'react-images-upload'
 import * as ROUTES from '../../constants/routes';
 import Button from 'react-bootstrap/Button'
 import { withFirebase } from '../Firebase';
 import app from 'firebase/app';
 import  { FirebaseContext } from '../Firebase';
-
-import "./styles.css";
-
 const initFields = {
     title: '',
     summary: '',
@@ -18,12 +14,10 @@ const initFields = {
     times: [],
     serves: '',
     tags: [],
-    user:null,
-    pictureFile: null,
-    pictureFileURL: null,
     parent: "",
     mode: "fork",
     visible: true,
+    user:null,
     date: 0
 }
 
@@ -32,7 +26,6 @@ class CreateRecipe extends Component {
     constructor(props) {
         super(props);
         this.state = {... initFields};
-        this.onDrop = this.onDrop.bind(this);
     }
     componentDidMount() {
     if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
@@ -214,42 +207,12 @@ class CreateRecipe extends Component {
       this.props.history.push('/')
   }
     
-    onDrop = (picture) => {
-      console.log("I write my own handler aha! Here is the picture: ");
-      console.log(picture[0])
-      this.setState({
-        pictureFile: picture[0],
-        pictureFileURL: URL.createObjectURL(picture[0])
-      })
-      
-  
-      /*this.setState({
-        picture: URL.createObjectURL(picture.target.files[0])
-      })*/
-    }
 
     render() { 
 
-      let photoRender;
-      if (this.state.pictureFileURL === null) {
-        photoRender = <ImageUploader 
-                        buttonText='Choose Image'
-                        onChange={this.onDrop}
-                      />
-      }
-      else {
-        photoRender = <img border="3" class="centerPhoto" height="200" width="300" src={this.state.pictureFileURL}/>
-      }
-
     return (
-      <div class="container-fluid bg">
-        <div class="d-flex justify-content-center p-1">
-        <div class="col-sm-4">
-        <div class="container-lg signInCard rounded p-2">        
-        <p>
-        <h1 class="centerTitle">Add a new recipe!</h1>
-        </p>
-        <div class="signInCardComp">
+      <div>
+         <h1>Add a new recipe!</h1>
         <form onSubmit={this.handleSumbit} >
           <fieldset>
             <div class="form-group">
@@ -278,37 +241,28 @@ class CreateRecipe extends Component {
             </div>
 
             <div class="form-group">
-              <div>
-                <label>Ingredients</label>
-              </div>
+              <label>Ingredients</label>
               {this.renderIngredientInputs()}
-              <button type="button" className="btn btn-dark" onClick={()=> this.addIngredientInputs()}>+ Add Ingredient</button>
+              <button type="button" className="btn btn-primary" onClick={()=> this.addIngredientInputs()}>+ Add Ingredient</button>
             </div>
 
             <div class="form-group">
-              <div>
-                <label forHtml="textArea">Steps</label>
-              </div>
+              <label forHtml="textArea">Steps</label>
               {this.renderStepInputs()}
-              <button type="button" className="btn btn-dark" onClick={()=> this.addStepInputs()}>+ Add Step</button>
+              <button type="button" className="btn btn-primary" onClick={()=> this.addStepInputs()}>+ Add Step</button>
             </div> 
-            <p>
-            <div>
-              {photoRender}
-            </div>
-            </p>
-            <input type="submit" className="btn btn-secondary" class="centerSubmit"></input>
+            
+            <input type="submit" className="btn btn-secondary"></input>
           </fieldset>
         </form>
-        </div>
-        </div>
-        </div>
-        </div>
+        <div className="col-4"></div>
   </div>
        
     );
     }
 }
+
+
  
 export default withFirebase(CreateRecipe);
 

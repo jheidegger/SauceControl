@@ -6,9 +6,11 @@
     "animate.css": "^4.1.1",
     "bootstrap": "^4.6.0",
     "firebase": "^5.11.1",
+    "firebase-admin": "^9.4.2",
     "react": "^16.6.3",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^16.6.3",
+    "react-flow-renderer": "^8.5.0",
     "react-google-login": "^5.2.2",
     "react-images-upload": "^1.2.8",
     "react-router-dom": "^4.3.1",
@@ -26,5 +28,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.12.7"
+  }
 }

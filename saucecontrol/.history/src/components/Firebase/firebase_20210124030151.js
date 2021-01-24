@@ -20,12 +20,8 @@ class Firebase {
       projectId: 'saucecontrol-bc59e'
     }); */
     this.db = app.firestore();
-    this.storage = app.storage();
   }
-  async getParent(uid) {
-    const parentData = await this.db.collection('recipes').doc(uid).get().data();
-    return parentData;
-  }
+
   async dump_database() {
     this.db.collection("recipes").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -50,52 +46,26 @@ class Firebase {
     var par = state.parent;
 
     var db = this.db;
-    var recipeId = this.db.collection("recipes").add({
+    var recipeId = await this.db.collection("recipes").add({
       title: state.title,
       ingredients: state.ingredients,
       steps: state.steps,
       summary: state.summary,
-      user: email,
-      photoURL: "none",
       parent: (state.parent !== undefined ? state.parent : undefined),
+      user: email,
       visible: state.visible,
       date: Date.now(),
       children: []
-  })
-    var db = this.db;
-    var storage = this.storage;
-    recipeId.then(function(docRef){
+    }).then(function(docRef){
       console.log("doc ref is ")
       console.log(docRef.path.split("/")[1])
-      console.log("par is")
       if (par !== undefined && docRef !== undefined) {
-        db.collection("recipes").doc(par).update({
+        this.db.collection("recipes").doc(state.parent).update({
           "children": firebase.firestore.FieldValue.arrayUnion(docRef.path.split("/")[1])
       });
       }
-      //insert image to storage if exists
-      if(state.pictureFile !== null) {
-        console.log('gonna try to add to storage')
-        const key = Date().toLocaleString() + state.user.bT;
-        const img = storage.ref().child(key);
-
-        img.put(state.pictureFile).then((snap) => {
-            console.log("Metadata: " + snap.metadata)
-            storage.ref().child(key).getDownloadURL().then(function(downloadURL) {
-                console.log(downloadURL)
-                db.collection('recipes').doc(docRef.id).update({
-                  photoURL: downloadURL
-                })
-            })
-        })
-      }
-      else {
-        console.log('SIKE')
-      }
-
-      console.log(docRef.id);
       var query =db.collection("Users").where("email", "==", email).get();
-    
+      
       query.then(function(querySnapshot) {
         console.log(querySnapshot.size)
           if (querySnapshot.size !== 0) {
@@ -114,7 +84,13 @@ class Firebase {
     .catch(function(error) {
         console.log("Error getting documents: ", error);
     });
-   
+    console.log('rec id is ')
+      console.log(recipeId);
+    if (state.parent !== undefined && recipeId !== undefined) {
+      this.db.collection("recipes").doc(state.parent).update({
+        "children": firebase.firestore.FieldValue.arrayUnion(recipeId)
+    });
+    }
   }
   checkUser = (email) => {
     var query = this.db.collection("Users").where("email", "==", email).get();

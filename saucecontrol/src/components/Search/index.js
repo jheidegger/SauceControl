@@ -28,6 +28,7 @@ class SearchResults extends Component {
        var recipes = [];
        var recipeTitles = [];
        var search = this.params.search.toLowerCase();
+       console.log(search)
         querySnapshot.forEach(function(doc) {
             // doc.data() is never undefined for query doc snapshots
                 if(doc.data().title.toLowerCase().includes(search)){

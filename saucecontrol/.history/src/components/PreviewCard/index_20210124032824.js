@@ -34,11 +34,14 @@ class PreviewCard extends Component {
     render() {
         return (
         <div class="card">
-            <img src={this.state.img}  height="150" width="150" class="card-img-top" alt="food"/>
+            <img src={this.state.img}  height="300" width="300" class="card-img-top" alt="food"/>
             <div class="card-body">
                 <h4 class="card-title">{this.state.title}</h4>
                 <p class="card-text">{this.state.summary}</p>
                 <a href={'/recipes/'+this.props.id} class="btn btn-primary">View</a>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">PUT TOTAL TIME</small>
             </div>
             
         </div>

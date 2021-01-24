@@ -10,23 +10,19 @@ import { withFirebase } from '../Firebase';
 
 
 const init_fields = {
-  searchVal:null
+  search:null
 }
 class Navigation extends Component {
   constructor(props) {
     super(props);
+    this.state=init_fields
   }
   
-  change  = (value, event) => {
-    
+  search = () => {
+    this.props.history.push("/search/"+this.state.search);
   }
-  search = (value,event) => {
-    console.log(this.props);
-    this.props.history.push("/search/"+value);
-  }
-  search = (value,event) => {
-    console.log(this.props);
-    this.props.history.push("/search/"+value);
+  handleChange = (event) => {
+    this.setState({[event.target.name]: event.target.value})
   }
   render(){
     return(<div>
@@ -51,6 +47,10 @@ class Navigation extends Component {
       <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
       </li>
       <li class="nav-item mx-3 mt-1">
+      <form class="d-flex" onSubmit={this.search}>
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" value={this.state.search} onChange={this.handleChange}/>
+        <button class="btn btn-outline-success" >Search</button>
+      </form>
         {/** 
       <SearchField
             placeholder="Search..."
