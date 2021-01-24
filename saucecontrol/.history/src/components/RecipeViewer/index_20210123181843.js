@@ -7,8 +7,8 @@ class RecipeViewer extends Component {
         console.log(this.params.recipe)
     }
     componentDidMount = () => {
-       // var postRef= this.props.firebase.db.ref('recipes/' + this.params.recipe)
-
+        var postRef= this.props.firebase.db.ref('recipes/' + this.params.recipe)
+        
     }
     render () {
         return (
