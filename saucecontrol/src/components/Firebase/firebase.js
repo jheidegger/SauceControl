@@ -36,7 +36,23 @@ class Firebase {
       summary: state.summary
   })
   }
+  checkUser = (email) => {
+    var query = this.db.collection("Users").where("email", "==", email).get();
+    query.then(function(querySnapshot) {
+      querySnapshot.forEach(function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        });
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+    if (query === false) {
+      console.log("need to register")
+    }
 }
+}
+
 
 
 

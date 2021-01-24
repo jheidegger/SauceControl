@@ -5,6 +5,7 @@ import logo from '../../constants/saucecontrol1.png'
 import * as ROUTES from '../../constants/routes';
 import Auth2 from '../Auth2';
 import {Auth2Context} from '../Auth2';
+import { withFirebase } from '../Firebase';
 
 class Navigation extends Component {
   constructor(props) {
@@ -12,11 +13,7 @@ class Navigation extends Component {
   }
   render(){
     return(<div>
-    <NavigationBar />
-  </div>);}
-}
-const NavigationBar = () => (
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="Home">
       <img src={logo} alt="logo"  height="60"/>
   </a>
@@ -41,15 +38,18 @@ const NavigationBar = () => (
       <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
       </li>
       <li class="nav-item">
-      <SignInButton/>
+      <SignInButton firebase={this.props.firebase}/>
       </li>
      
     </ul>
   </div>
 </nav>
-  
-);
+  </div>);}
+}
 class SignInButton extends Component {
+  constructor(props){
+    super(props);
+  }
   componentDidMount() {
     //var auth = new Auth2();
     //console.log(auth);
@@ -77,6 +77,7 @@ class SignInButton extends Component {
   onSuccess = (user) => {
     
     var profile = user.getBasicProfile();
+    this.registerUser(profile);
     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
     console.log('Name: ' + profile.getName());
     console.log('Image URL: ' + profile.getImageUrl());
@@ -88,6 +89,12 @@ class SignInButton extends Component {
   }
   onFailure = () => {
     console.log('Failure');
+  }
+  registerUser = (profile) => {
+    // check if profile already exists
+    console.log("this is working");
+    console.log(this.props);
+    this.props.firebase.checkUser(profile.getEmail());
   }
   render = () => (
     <div id="my-signIn" />
@@ -111,4 +118,4 @@ const NavigationNonAuth = () => (
   </div>
   </nav>
 );
-export default Navigation;
+export default withFirebase(Navigation);
