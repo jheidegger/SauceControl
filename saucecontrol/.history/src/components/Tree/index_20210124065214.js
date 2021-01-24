@@ -47,25 +47,18 @@ class Tree extends Component {
     } 
   render() {
         var d = this.state.descendants;
-        var rows = [];
-        var temprow = []
+        var rows = [][];
         for (var i = 0; i < d.length; i++) {
-            
-            if (d[i][1] != lasti) {
-                rows.push(temprow)
-                temprow = []
-            }
-            temprow.push(d[i][0])
-            var lasti = d[i][1]
-            /*
+
             if (rows[d[i][1]] !== undefined) {
-                rows[d[i][1]] = rows[d[i][1]].concat(d[i][0]) 
+                //rows[d[i][1]] = rows[d[i][1]].concat(d[i][0]) 
+                rows[d[i][1]].push(d[i][0])
             } else {
                 rows[d[i][1]] = d[i][0]
             }
-            */
+
+            
         }
-        rows.push(temprow)
         console.log(rows)
         //<PreviewCard id={elem}/>
         return (rows.map(

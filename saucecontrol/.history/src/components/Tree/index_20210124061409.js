@@ -2,8 +2,7 @@ import React, { useState, Component } from 'react';
 import {withFirebase} from '../Firebase'
 import PreviewCard from '../PreviewCard';
 const init_fields = {
-    ancestors: [],
-    descendants: []
+    ancestors: []
 }
 class Tree extends Component {
     constructor(props) {
@@ -46,35 +45,8 @@ class Tree extends Component {
         console.log(descendants) 
     } 
   render() {
-        var d = this.state.descendants;
-        var rows = [];
-        var temprow = []
-        for (var i = 0; i < d.length; i++) {
-            
-            if (d[i][1] != lasti) {
-                rows.push(temprow)
-                temprow = []
-            }
-            temprow.push(d[i][0])
-            var lasti = d[i][1]
-            /*
-            if (rows[d[i][1]] !== undefined) {
-                rows[d[i][1]] = rows[d[i][1]].concat(d[i][0]) 
-            } else {
-                rows[d[i][1]] = d[i][0]
-            }
-            */
-        }
-        rows.push(temprow)
-        console.log(rows)
-        //<PreviewCard id={elem}/>
-        return (rows.map(
-            chunk => 
-            <div class="row">
-                {chunk.map(item =>
-                    <div className="col-md-6 col=sm-6 col-lg-3 format">
-                    <PreviewCard id={item}/>
-                </div>)})</div>));
+        var disp = this.state.descendants.map(elem => <PreviewCard id={elem}/>).reverse()
+        return disp;
     }
 };
 export default withFirebase(Tree);
