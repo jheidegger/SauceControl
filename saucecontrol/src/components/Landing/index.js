@@ -1,9 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
+import * as ROUTES from '../../constants/routes';
+class Landing extends Component {
+  
+  constructor(props){
+    super(props)
+  }
+  
+  
+  render(){
+    return(
+      <div class="container-fluid hero">
+        <button type="button" class="btn hero__title" onClick={this.enter}>Enter the Sauce</button>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+        <div class="cube"></div>
+      </div>
+    );
+  }
+  enter = () => {
+    this.props.history.push(ROUTES.HOME);
+  }
+  
+}
 
-const Landing = () => (
-  <div>
-    <h1>Landing</h1>
-  </div>
-);
+  
 
 export default Landing;
