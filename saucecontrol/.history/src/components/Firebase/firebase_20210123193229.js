@@ -29,8 +29,7 @@ class Firebase {
   });
   }
   async getRecipe(recipeTitle) {
-    const recipes = await this.db.collection('recipes').doc(recipeTitle).get().data();
-    console.log(recipes)
+    const recipes = await this.firebase.db.collection('recipes').doc(recipeTitle).get();
     return recipes
   }
   
@@ -42,30 +41,8 @@ class Firebase {
       summary: state.summary
   })
   }
-  checkUser = (email) => {
-    var query = this.db.collection("Users").where("email", "==", email).get();
-    var db = this.db;
-    query.then(function(querySnapshot) {
-      console.log(querySnapshot.size)
-      if (querySnapshot.size === 0) {
-        db.collection("Users").add({
-          email: email,
-          recipes: 'none'
-        })
-      }
-      querySnapshot.forEach(function(doc) {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
-        });
-    })
-    .catch(function(error) {
-        console.log("Error getting documents: ", error);
-    });
-    if (query === false) {
-      console.log("need to register")
-    }
 }
-}
+
 
 
 export default Firebase;
