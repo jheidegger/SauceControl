@@ -1,14 +1,10 @@
 import React, { useState, useEffect, Component } from 'react';
  
-import ImageUploader from 'react-images-upload'
 import * as ROUTES from '../../constants/routes';
 import Button from 'react-bootstrap/Button'
 import { withFirebase } from '../Firebase';
 import app from 'firebase/app';
 import  { FirebaseContext } from '../Firebase';
-
-import "./styles.css";
-
 const initFields = {
     title: '',
     summary: '',
@@ -18,9 +14,6 @@ const initFields = {
     times: [],
     serves: '',
     tags: [],
-    user:null,
-    pictureFile: null,
-    pictureFileURL: null,
     parent: "",
     mode: "fork",
     visible: true
@@ -31,30 +24,13 @@ class CreateRecipe extends Component {
     constructor(props) {
         super(props);
         this.state = {... initFields};
-        this.onDrop = this.onDrop.bind(this);
     }
+    
     componentDidMount() {
-    if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
+        if (this.props.location.state !== undefined && this.props.location.state.parentState !== null) {
             this.setState(this.props.location.state.parentState);
-            this.setState({editMode :this.props.location.state.editMode, parent: this.props.location.state.parent});
         }
-      const data = JSON.parse(sessionStorage.getItem('userData'));
-      let user=data;
-      //console.log(user);
-      this.setState({user: user});
-    }
-
-    isSignedIn() {
-      return (this.state.user !== null)
-    }
-
-    getEmail() {
-      if(this.state.user !==null) {
-        return this.state.user.jt;
-      }
-      else {
-        return "no Email";
-      }
+        //{ ingredients: this.props.location.state.parentState.ingredients}
     }
 
     handleChange = (event) => {
@@ -205,28 +181,10 @@ class CreateRecipe extends Component {
     handleSumbit = (event) => {
       event.preventDefault()
       console.log(this.state.name)
-      
-      if (this.state.editMode == 'edit') {
-          this.props.firebase.whiteout_recipe(this.state.parent)
-      } else {
-        this.props.firebase.insert_recipe(this.state)
-      }
+      this.props.firebase.insert_recipe(this.state)
       this.props.history.push('/')
   }
     
-    onDrop = (picture) => {
-      console.log("I write my own handler aha! Here is the picture: ");
-      console.log(picture[0])
-      this.setState({
-        pictureFile: picture[0],
-        pictureFileURL: URL.createObjectURL(picture[0])
-      })
-      
-  
-      /*this.setState({
-        picture: URL.createObjectURL(picture.target.files[0])
-      })*/
-    }
 
     render() { 
 
@@ -243,7 +201,6 @@ class CreateRecipe extends Component {
                 class="form-control" 
                 id="inputDefault"
                 placeholder="Enter title"
-                value={this.state.title}
                 onChange={this.handleChange}
                 ></input>
             </div>
@@ -256,7 +213,6 @@ class CreateRecipe extends Component {
                   rows="3"
                   name="summary"
                   onChange={this.handleChange} 
-                  value={this.state.summary}
                   placeholder="80 characters max"></textarea>
             </div>
 
@@ -271,11 +227,7 @@ class CreateRecipe extends Component {
               {this.renderStepInputs()}
               <button type="button" className="btn btn-primary" onClick={()=> this.addStepInputs()}>+ Add Step</button>
             </div> 
-            <ImageUploader 
-              buttonText='Choose Image'
-              onChange={this.onDrop}
-            />
-            <img className="photo" src={this.state.pictureFileURL}/>
+            
             <input type="submit" className="btn btn-secondary"></input>
           </fieldset>
         </form>

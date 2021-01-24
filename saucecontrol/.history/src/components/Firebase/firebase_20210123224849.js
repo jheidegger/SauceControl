@@ -19,7 +19,6 @@ class Firebase {
       projectId: 'saucecontrol-bc59e'
     }); */
     this.db = app.firestore();
-    this.storage = app.storage();
   }
 
   async dump_database() {
@@ -34,9 +33,8 @@ class Firebase {
     console.log(recipes)
     return recipes
   }
-  async whiteout_recipe(state) {
-    console.log("parent to be invisd is " + state)
-    this.db.collection("recipes").doc(state).update({visible: false})
+  async whiteout_recipe(id) {
+    this.db.collection("recipes").doc(id).update({visible: false})
   }
   async insert_recipe(state) {
     var email = "none";
@@ -49,35 +47,12 @@ class Firebase {
       ingredients: state.ingredients,
       steps: state.steps,
       summary: state.summary,
-      user: email,
-      photoURL: "none",
       parent: (state.parent !== undefined ? state.parent : undefined),
-      visible: state.visible
+      user: email
   })
     var db = this.db;
-    var storage = this.storage;
     recipeId.then(function(docRef){
       
-      //insert image to storage if exists
-      if(state.pictureFile !== null) {
-        console.log('gonna try to add to storage')
-        const key = Date().toLocaleString() + state.user.bT;
-        const img = storage.ref().child(key);
-
-        img.put(state.pictureFile).then((snap) => {
-            console.log("Metadata: " + snap.metadata)
-            storage.ref().child(key).getDownloadURL().then(function(downloadURL) {
-                console.log(downloadURL)
-                db.collection('recipes').doc(docRef.id).update({
-                  photoURL: downloadURL
-                })
-            })
-        })
-      }
-      else {
-        console.log('SIKE')
-      }
-
       console.log(docRef.id);
       var query =db.collection("Users").where("email", "==", email).get();
       

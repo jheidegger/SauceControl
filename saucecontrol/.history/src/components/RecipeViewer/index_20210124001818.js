@@ -2,7 +2,6 @@ import React, { useState, useEffect, Component } from 'react';
 import {Container, Row, Col} from 'react-bootstrap';
 import { withFirebase } from '../Firebase';
 import {Link} from 'react-router-dom'
-
 const initFields = {
     title: "",
     steps: [],
@@ -16,7 +15,10 @@ class RecipeViewer extends Component {
         super(props);
         this.state = initFields;
         this.params = props.match.params;
-        
+        const data = JSON.parse(sessionStorage.getItem('userData'));
+        console.log("data is ") 
+        console.log(data)
+        this.setState({user: data});
     }
     onResult = (querySnapshot) => {
         console.log(querySnapshot.data())
@@ -30,10 +32,6 @@ class RecipeViewer extends Component {
         console.log("ahhhhh")
     }
     componentDidMount = () => {
-        const data = JSON.parse(sessionStorage.getItem('userData'));
-        let user=data;
-        //console.log(user);
-        this.setState({user: user});
         this.props.firebase.db.collection('recipes')
         .doc(this.params.recipe).onSnapshot(this.onResult, this.onError)
     }
