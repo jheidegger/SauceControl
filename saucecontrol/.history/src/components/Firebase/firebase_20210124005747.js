@@ -51,7 +51,7 @@ class Firebase {
       parent: (state.parent !== undefined ? state.parent : undefined),
       user: email,
       visible: state.visible,
-      date: Date.now()
+      date: state.date
   })
     var db = this.db;
     recipeId.then(function(docRef){

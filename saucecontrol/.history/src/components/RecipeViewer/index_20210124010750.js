@@ -94,7 +94,7 @@ class RecipeViewer extends Component {
           </Link>
           {/* this should be conditioned on owning the recipe */}
           
-        
+        )
         </div>
         )
     }

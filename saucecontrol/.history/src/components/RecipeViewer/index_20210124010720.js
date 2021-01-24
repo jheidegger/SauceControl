@@ -74,8 +74,7 @@ class RecipeViewer extends Component {
         }
         return (
         <div><h2>{this.state.title}</h2>
-        by {this.state.owner} 
-        {date}
+        {this.state.owner}, {date}
         <p>{this.state.summary}</p>
         <h3>Ingredients</h3>
         {ingredients}
@@ -94,7 +93,7 @@ class RecipeViewer extends Component {
           </Link>
           {/* this should be conditioned on owning the recipe */}
           
-        
+        )
         </div>
         )
     }

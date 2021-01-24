@@ -37,15 +37,6 @@ class RecipeViewer extends Component {
         this.props.firebase.db.collection('recipes')
         .doc(this.params.recipe).onSnapshot(this.onResult, this.onError)
     }
-    formatDate = (date) => {
-        if(date === undefined) {
-            return (<div>no date</div>);
-        }
-        var dat = new Date(date);
-        return (
-            <div>{dat.getMonth() + 1}/{dat.getDate()}/{dat.getFullYear()} {dat.toLocaleTimeString()}</div>
-        )
-    }
     render () {
         console.log(this.state.ingredients)
         console.log("rendering")
@@ -68,14 +59,9 @@ class RecipeViewer extends Component {
           <button>Edit</button>
           </Link>
     }
-        let date = <div></div>
-        if (this.state.date !== undefined) {
-            date = this.formatDate(this.state.date)
-        }
         return (
         <div><h2>{this.state.title}</h2>
-        by {this.state.owner} 
-        {date}
+        {this.state.owner}, {this.state.date}
         <p>{this.state.summary}</p>
         <h3>Ingredients</h3>
         {ingredients}
@@ -94,7 +80,7 @@ class RecipeViewer extends Component {
           </Link>
           {/* this should be conditioned on owning the recipe */}
           
-        
+        )
         </div>
         )
     }

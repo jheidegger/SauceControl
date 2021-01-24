@@ -43,7 +43,7 @@ class RecipeViewer extends Component {
         }
         var dat = new Date(date);
         return (
-            <div>{dat.getMonth() + 1}/{dat.getDate()}/{dat.getFullYear()} {dat.toLocaleTimeString()}</div>
+            <div>{dat.getMonth()}/{dat.getDate()}/{dat.getFullYear()} {dat.toLocaleTimeString()}</div>
         )
     }
     render () {
@@ -74,8 +74,7 @@ class RecipeViewer extends Component {
         }
         return (
         <div><h2>{this.state.title}</h2>
-        by {this.state.owner} 
-        {date}
+        {this.state.owner}, {date}
         <p>{this.state.summary}</p>
         <h3>Ingredients</h3>
         {ingredients}
@@ -94,7 +93,7 @@ class RecipeViewer extends Component {
           </Link>
           {/* this should be conditioned on owning the recipe */}
           
-        
+        )
         </div>
         )
     }
