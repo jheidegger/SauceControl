@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchField from "react-search-field";
+//import SearchField from "react-search-field";
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../constants/saucecontrol1.png'
@@ -51,6 +51,7 @@ class Navigation extends Component {
       <Link class="nav-link" to={ROUTES.CREATE_RECIPE}>New Recipe</Link>
       </li>
       <li class="nav-item mx-3 mt-1">
+        {/** 
       <SearchField
             placeholder="Search..."
             onChange={this.change}
@@ -58,6 +59,7 @@ class Navigation extends Component {
             onSearchClick={this.search}
             classNames="test-class"
             />
+            */}
       </li>
       <li class="nav-item">
       <SignInButton firebase={this.props.firebase}/>
