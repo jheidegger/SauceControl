@@ -13,7 +13,8 @@ const initFields = {
     steps: [],
     times: [],
     serves: '',
-    tags: []
+    tags: [],
+    user:null
 }
 
 class CreateRecipe extends Component {
@@ -22,7 +23,26 @@ class CreateRecipe extends Component {
         super(props);
         this.state = {... initFields};
     }
-    
+    componentDidMount() {
+      const data = JSON.parse(sessionStorage.getItem('userData'));
+      let user=data;
+      //console.log(user);
+      this.setState({user: user});
+    }
+
+    isSignedIn() {
+      return (this.state.user !== null)
+    }
+
+    getEmail() {
+      if(this.state.user !==null) {
+        return this.state.user.jt;
+      }
+      else {
+        return "no Email";
+      }
+    }
+
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value})
 
