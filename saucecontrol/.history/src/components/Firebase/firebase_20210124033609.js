@@ -22,10 +22,7 @@ class Firebase {
     this.db = app.firestore();
     this.storage = app.storage();
   }
-  async getParent(uid) {
-    const parentData = await this.db.collection('recipes').doc(uid).get().data();
-    return parentData;
-  }
+
   async dump_database() {
     this.db.collection("recipes").get().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
