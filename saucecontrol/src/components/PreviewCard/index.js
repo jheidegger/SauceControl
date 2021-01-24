@@ -23,7 +23,7 @@ class PreviewCard extends Component {
         this.setState({summary:querySnapshot.data().summary,
                         title:querySnapshot.data().title,
                         img:querySnapshot.data().photoURL,
-                        author:querySnapshow.data().user,
+                        author:querySnapshot.data().user,
                         date:querySnapshot.data().date});
         // add the cover image and time fields to this later
     } 
