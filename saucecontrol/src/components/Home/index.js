@@ -82,14 +82,15 @@ class Home extends Component {
   render(){
     var recipeCards = this.state.recipes.map((id)=><PreviewCard id={id}/>)
     return(
-      <div class="container-fluid">
+      <div class="container-fluid bg">
         <div class="row"><h1 class="s-4 animate__animated animate__fadeInLeft">Hello {this.getFirstName()} let's check out those recipes!</h1></div>
             <div class="d-flex justify-content-center">
                 <div class="col-3">
                   {recipeCards}
                 </div> 
             </div>
-        </div>);
+        </div>
+        );
   }
 }
 class userData extends Component {
