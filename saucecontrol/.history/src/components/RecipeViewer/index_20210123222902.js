@@ -45,8 +45,7 @@ class RecipeViewer extends Component {
             pathname: '/recipe-submit',
             state: {
                 parentState: this.state,
-                editMode: "fork",
-                parent: this.params.recipe
+                editMode: "fork"
             }
           }}> 
           <button>Customize</button>

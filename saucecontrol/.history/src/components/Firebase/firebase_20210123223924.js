@@ -45,7 +45,7 @@ class Firebase {
       ingredients: state.ingredients,
       steps: state.steps,
       summary: state.summary,
-      parent: (state.parent !== undefined ? state.parent : undefined),
+      parent: (state.parent !== undefined ? state.parent : undefined)
       user: email
   })
     var db = this.db;
