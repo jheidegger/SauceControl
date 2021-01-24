@@ -48,7 +48,7 @@ class SearchResults extends Component {
     updateSearch = (search) => {
         
         console.log(search)
-        this.props.firebase.db.collection("recipes").get().then(this.onResult);
+        this.props.firebase.db.collection("recipes").where("visible","==",true).then(this.onResult);
         
     }
     render(){
