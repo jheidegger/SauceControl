@@ -7,7 +7,7 @@ const initFields = {
     steps: [],
     ingredients: [],
     summary: "",
-    user: ""
+    acct: ""
 }
 class RecipeViewer extends Component {
     
@@ -15,7 +15,9 @@ class RecipeViewer extends Component {
         super(props);
         this.state = initFields;
         this.params = props.match.params;
-        
+        const data = JSON.parse(sessionStorage.getItem('userData'));
+        let user=data;
+        this.setState({user: user.jt});
     }
     onResult = (querySnapshot) => {
         console.log(querySnapshot.data())
@@ -29,10 +31,6 @@ class RecipeViewer extends Component {
         console.log("ahhhhh")
     }
     componentDidMount = () => {
-        const data = JSON.parse(sessionStorage.getItem('userData'));
-        let user=data;
-        //console.log(user);
-        this.setState({user: user});
         this.props.firebase.db.collection('recipes')
         .doc(this.params.recipe).onSnapshot(this.onResult, this.onError)
     }
@@ -43,10 +41,10 @@ class RecipeViewer extends Component {
     let ingredients = this.state.ingredients.map((element) => <div>{element.amount} {element.name}</div>)
     let edit = <div></div>
     console.log("user is")
-    console.log(this.state.user.jt)
+    console.log(this.state.user)
     console.log("owner is ")
     console.log(this.state.owner)
-    if (this.state.owner == this.state.user.jt) {
+    if (this.state.owner == this.state.user) {
          edit = <Link to={{
             pathname: '/recipe-submit',
             state: {

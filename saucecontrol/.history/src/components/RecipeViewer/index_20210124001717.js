@@ -15,7 +15,11 @@ class RecipeViewer extends Component {
         super(props);
         this.state = initFields;
         this.params = props.match.params;
-        
+        const data = JSON.parse(sessionStorage.getItem('userData'));
+        console.log("data is ") 
+        console.log(data)
+        let user=data;
+        this.setState({user: user});
     }
     onResult = (querySnapshot) => {
         console.log(querySnapshot.data())
@@ -29,10 +33,6 @@ class RecipeViewer extends Component {
         console.log("ahhhhh")
     }
     componentDidMount = () => {
-        const data = JSON.parse(sessionStorage.getItem('userData'));
-        let user=data;
-        //console.log(user);
-        this.setState({user: user});
         this.props.firebase.db.collection('recipes')
         .doc(this.params.recipe).onSnapshot(this.onResult, this.onError)
     }
