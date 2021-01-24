@@ -47,7 +47,7 @@ class Firebase {
     var par = state.parent;
 
     var db = this.db;
-    var recipeId = this.db.collection("recipes").add({
+    var recipeId = await this.db.collection("recipes").add({
       title: state.title,
       ingredients: state.ingredients,
       steps: state.steps,
