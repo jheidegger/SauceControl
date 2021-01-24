@@ -53,7 +53,10 @@ class RecipeViewer extends Component {
     let steps = this.state.steps.map((element) => <div>{element.step_summary}</div>)
     let ingredients = this.state.ingredients.map((element) => <div>{element.amount} {element.name}</div>)
     let edit = <div></div>
-    if (this.state.user !== undefined) {
+    console.log("user is")
+    console.log(this.state.user.jt)
+    console.log("owner is ")
+    console.log(this.state.owner)
     if (this.state.owner == this.state.user.jt) {
          edit = <Link to={{
             pathname: '/recipe-submit',
@@ -65,7 +68,7 @@ class RecipeViewer extends Component {
           }}> 
           <button>Edit</button>
           </Link>
-    }}
+    }
         let date = <div></div>
         if (this.state.date !== undefined) {
             date = this.formatDate(this.state.date)
