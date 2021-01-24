@@ -1,11 +1,7 @@
 import React, { useState, useEffect, Component } from 'react';
-import {Container, Row, Col} from 'react-bootstrap';
 import { withFirebase } from '../Firebase';
 const initFields = {
-    title: "",
-    steps: [],
-    ingredients: [],
-    summary: ""
+    title: "Generic"
 }
 class RecipeViewer extends Component {
    
@@ -29,17 +25,11 @@ class RecipeViewer extends Component {
         .doc(this.params.recipe).onSnapshot(this.onResult, this.onError)
     }
     render () {
-        console.log(this.state.ingredients)
         console.log("rendering")
-    let steps = this.state.steps.map((element) => <div>{element.step_summary}</div>)
-    let ingredients = this.state.ingredients.map((element) => <div>{element.amount} {element.name}</div>)
         return (
         <div><h2>{this.state.title}</h2>
         <p>{this.state.summary}</p>
-        <h3>Ingredients</h3>
-        {ingredients}
-        <h3>Steps</h3>
-        {steps}
+        
         </div>
         
         )

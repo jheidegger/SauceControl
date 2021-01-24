@@ -29,8 +29,7 @@ class Firebase {
   });
   }
   async getRecipe(recipeTitle) {
-    const recipes = await this.db.collection('recipes').doc(recipeTitle).get().data();
-    console.log(recipes)
+    const recipes = await this.firebase.db.collection('recipes').get();
     return recipes
   }
   
